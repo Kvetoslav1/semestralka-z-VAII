@@ -1,0 +1,116 @@
+body {
+    display: grid;
+    background-color: #354E59;
+    grid-template-columns: [first] 20%[second] 60% [third] 20% ;
+    grid-template-rows: [row1-start] 1% [row2-start] 100vh [row3-start] 1%;
+}
+
+/*
+samotné telo stránky
+*/
+.telo {
+    grid-column: 2/3;
+    grid-row: 1/3;
+    display: grid;
+    grid-template-columns: [first] 5% [second] 90% [third]  5%;
+    grid-template-rows: [row1-start] 1% [row2-start] 98% [row3-start] 1%;
+    border: 2px solid black;
+    background-color: #CCDEE0;
+    border-radius: 10px;
+}
+
+/*
+odsadenie pre veci nachádzajúce sa v stránke
+*/
+.odsadenie {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: grid;
+    grid-template-rows: [row1-start] 20% [row2-start] 30px [row3-start] auto [row4-start] 50px;
+    grid-gap: 10px;
+}
+
+/*
+nastavenie veľkosti obrázkov v slideShow
+*/
+.slideShow {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    margin-bottom: 0.2%;
+}
+
+/*
+tlačítka na začiatku stránky
+*/
+.btn-group {
+    background-color: #465257;
+    display: flex;
+}
+
+.btn-group > :nth-child(2) {
+    margin-right: auto;
+}
+
+.btn-group button {
+    font-weight: 900;
+    background-color: #465257;
+    color: #EEEAE4;
+    padding: 0.5% 0.7%;
+    cursor: pointer;
+}
+
+.btn-group button:hover {
+    background-color: #344146;
+}
+
+.koniec {
+    text-align: right;
+}
+
+@media(max-width: 970px) {
+    .btn-group > :nth-child(2){
+        margin-right: unset;
+    }
+    .btn-group {
+        flex-direction: column;
+    }
+    body {
+        grid-template-columns: [first] 5%[second] 90% [third] 5%;
+        grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
+    }
+    .odsadenie {
+        grid-template-rows: [row1-start] 20% [row2-start] 100px [row3-start] auto [row4-start] 50px;
+        grid-gap: 15px;
+    }
+}
+
+@media (max-width: 320px) {
+    body {
+        grid-template-columns: [first] 1%[second] 98% [third] 1%;
+        grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
+    }
+}
+
+@media (max-height: 610px) {
+    body {
+        grid-template-rows: [row1-start] 1% [row2-start] 180vh [row3-start] 1%;
+    }
+}
+
+@media (max-height: 720px) {
+    .btn-group > :nth-child(2){
+        margin-right: unset;
+    }
+    .btn-group {
+        flex-direction: column;
+    }
+    body {
+        grid-template-columns: [first] 5%[second] 90% [third] 5%;
+        grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
+    }
+    .odsadenie {
+        grid-template-rows: [row1-start] 20% [row2-start] 100px [row3-start] auto [row4-start] 50px;
+        grid-gap: 15px;
+    }
+}
