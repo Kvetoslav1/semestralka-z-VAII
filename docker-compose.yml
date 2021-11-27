@@ -1,0 +1,17 @@
+version: '2'
+services:
+  DB-server:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=Database
+  webserver:
+    image: mitlabs/apache-php8.0
+    ports:
+      - "80:80"
+    depends_on:
+      - DB-server
+    volumes:
+      - ./:/var/www/html
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal

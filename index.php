@@ -1,3 +1,7 @@
+<?php
+require "pripojenie.php";
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,10 +27,27 @@
         </div>
 
         <div class="btn-group">
-            <button onclick="document.location='index.html'">Články/Podpora</button>
-            <button onclick="document.location='info.html'">Info</button>
-            <button onclick="document.location='register.html'"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrácia</button>
-            <button onclick="document.location='login.html'"><i class="fa fa-sign-in" aria-hidden="true"></i> Prihlásenie</button>
+            <button onclick="document.location='index.php'">Články/Podpora</button>
+            <button onclick="document.location='info.php'">Info</button>
+            <?php
+                if(isset($_SESSION['Email'])) {
+                    $selectMeno = $pripojenie->prepare("SELECT meno FROM pouzivatel where email = ?");
+                    $selectMeno->bind_param('s', $_SESSION['Email']);
+                    if($selectMeno->execute()) {
+                        $selectMeno->store_result();
+                        $selectMeno->bind_result($menoPouzivatela);
+                        $selectMeno->fetch();
+                    } ?>
+            <button onclick="document.location='userInfo.php'"><i class="fa fa-user" aria-hidden="true">
+                </i><?php if(empty($menoPouzivatela)) { echo "Nepodarilo sa zistiť meno používateľa"; }
+                else {echo " $menoPouzivatela";}?></button>
+                    <button onclick="document.location='odhlasenie.php'"><i class="fa fa-sign-out" aria-hidden="true"></i> Odhlásenie</button>
+            <?php
+                } else { ?>
+                <button onclick="document.location='register.php'"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrácia</button>
+                <button onclick="document.location='login.php'"><i class="fa fa-sign-in" aria-hidden="true"></i> Prihlásenie</button>
+                <?php }
+            ?>
         </div>
 
         <div>

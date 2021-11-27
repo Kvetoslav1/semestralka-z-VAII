@@ -13,7 +13,7 @@ div#sing-up {
     grid-template-rows: [row1-start] 50px [row2-start] 30px [row3-start] 30px [row4-start] 30px [row5-start] 30px;
 }
 
-.sign-up-header {
+.header {
     align-self: start;
     grid-row: 1;
     grid-column: 1/4;
@@ -36,6 +36,18 @@ div#register {
     grid-template-columns: [first] 25%[second] 40% [third] auto;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px [row4-start] auto [row5-start] 30px
         [row6-start] 30px [row7-start] 30px [row8-start] 30px [row9-start] 30px;
+}
+
+div#userInfo {
+    grid-template-columns: [first] 35%[second] 25%[third] auto;
+    grid-template-rows: [row1-start] 50px [row2-start] 20% [row3-start] 30px [row4-start] auto [row5-start] 30px
+        [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 50px;
+}
+
+.password-check {
+    color: red;
+    align-self: center;
+    padding-left: 180px;
 }
 
 span#resolution-change {
@@ -100,6 +112,7 @@ a:hover{
 }
 
 @media(max-width: 720px) {
+
     .vstup{
         max-width: 125px;
     }
@@ -110,6 +123,16 @@ a:hover{
     div#create-acc {
         grid-template-columns: [first] 40%[second] auto [third] 5%;
         grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 35px [row4-start] 35px;
+    }
+    .password-check {
+        padding-left: 140px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .password-check {
+        grid-row:5/8;
     }
 
 }
