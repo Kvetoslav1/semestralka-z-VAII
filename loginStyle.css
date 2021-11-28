@@ -44,7 +44,7 @@ div#userInfo {
         [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 50px;
 }
 
-.password-check {
+.all-check {
     color: red;
     align-self: center;
     padding-left: 180px;
@@ -124,14 +124,14 @@ a:hover{
         grid-template-columns: [first] 40%[second] auto [third] 5%;
         grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 35px [row4-start] 35px;
     }
-    .password-check {
+    .all-check {
         padding-left: 140px;
     }
 }
 
 @media (max-width: 400px) {
 
-    .password-check {
+    .all-check {
         grid-row:5/8;
     }
 

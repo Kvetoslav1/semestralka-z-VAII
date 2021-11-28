@@ -53,11 +53,11 @@ if(isset($_SESSION['Email'])) {
                                         $_SESSION['Email'] = $email;
                                         header("Location: index.php");
                                     } else { ?>
-                                        <p class="password-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané heslo.</p>
+                                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané heslo.</p>
                                         <?php
                                     }
                                 } else { ?>
-                                    <p class="password-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané meno.</p>
+                                    <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané meno.</p>
                                     <?php
                                 }
                             }

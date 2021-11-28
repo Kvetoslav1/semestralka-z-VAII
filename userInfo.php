@@ -54,20 +54,81 @@ if(!isset($_SESSION['Email'])) {
         </div>
         <form method="post" enctype="application/x-www-form-urlencoded">
             <div id="userInfo" class="gridy">
+                <?php
+                $chybnaHlaska = null;
+                if(strlen($_POST['zmenaMena']) != 0){
+                    if(strlen($_POST['zmenaMena']) >= 3) {
+                        //kontrola ci nie je meno zabrate
+                        $updateMeno = $pripojenie->prepare("SELECT meno FROM pouzivatel where meno = ?");
+                        $updateMeno->bind_param('s', $_POST['zmenaMena']);
+                        if($updateMeno->execute()) {
+                            $updateMeno->store_result();
+                            if($updateMeno->num_rows == 0) {
+                                $updateMeno->prepare("UPDATE pouzivatel SET meno = ?");
+                                $updateMeno->bind_param('s', $_POST['zmenaMena']);
+                                if($updateMeno->execute()) {
+                                    header("Refresh:0");
+                                    //meno bolo zmenené
+                                }
+                            } else {
+                                $chybnaHlaska = "Meno sa už používa";
+                            }
+                        }
+                    } else {
+                        $chybnaHlaska = "Meno je príliž krátke";
+                    }
+                    if(strlen($chybnaHlaska) != 0) {
+                        ?>
+                        <span class="all-check" style="grid-row: 3; grid-column: 2/4"> <?php echo $chybnaHlaska ?></span>
+                        <?php
+                    }
+
+                }
+                if(strlen($_POST['zmenaHesla']) != 0) {
+                    if(strlen($_POST['zmenaHesla']) >= 8) {
+                        if(strlen($_POST['zmenaPotvrHesla']) != 0) {
+                            if(strlen($_POST['zmenaPotvrHesla']) >= 8) {
+                                if($_POST['zmenaHesla'] == $_POST['zmenaPotvrHesla']) {
+                                    $updateHeslo = $pripojenie->prepare("UPDATE pouzivatel set heslo = ? where email = ?");
+                                    $hsl = password_hash($_POST['zmenaHesla'], PASSWORD_BCRYPT);
+                                    $updateHeslo->bind_param('ss', $hsl, $_SESSION['Email']);
+                                    if($updateHeslo->execute()) {
+                                        //heslo úspešne zmenené
+                                    }
+                                } else {
+                                    $chybnaHlaska = "Heslá sa nerovnajú";
+                                }
+                            } else {
+                                $chybnaHlaska = "Potvrdzovacie heslo je krátke";
+                            }
+                        } else {
+                            $chybnaHlaska = "Heslá sa nezhodujú";
+                        }
+                    } else {
+                        $chybnaHlaska = "Heslo je krátke";
+                    }
+                    if(strlen($chybnaHlaska) != 0) {
+                        ?>
+                        <span class="all-check" style="grid-row: 7; grid-column: 2/4"> <?php echo $chybnaHlaska ?></span>
+                        <?php
+                    }
+                }
+                ?>
                 <h2 class="header" style="grid-column: 1/4;">Údaje aktuálne prihláseného používateľa.</h2>
                 <span id="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
                         Vaše aktuálne údaje sú napísané v textových poliach. Ak chcete svoje údaje zmeniť tak napíšte vaše nové údaje
                 do týchto polí a stlačte tlačitko na odoslanie údajov.</span>
 
                 <span style="grid-row: 3;" class="bold">Používateľove meno:</span>
-                <input name="zmenaMena" type="text" placeholder="<?php echo "pouzivatelove meno"; ?>" minlength="3" maxlength="20">
+                <input class="vstup" style="grid-row: 3; grid-column: 2" name="zmenaMena" type="text"
+                       placeholder="<?php echo "pouzivatelove meno"; ?>" minlength="3" maxlength="20">
                 <span style="grid-row: 4">Meno musí mať minimálne 3 znaky a maximálne 20 znakov</span>
                 <span style="grid-row: 5" class="bold">Zmena hesla: </span>
-                <input style="grid-row: 5" name="zmenaHesla" type="password" pattern=".{8,}" placeholder="Nové heslo">
+                <input class="vstup" style="grid-row: 5; grid-column: 2" name="zmenaHesla" type="password" pattern=".{8,}" placeholder="Nové heslo">
                 <span style="grid-row: 6">Ak chcete zmeniť vaše aktuálne heslo tak musíte potvrdiť nové heslo. Heslo musí mať minimálne 8 znakov</span>
                 <span style="grid-row: 7" class="bold">Potvrdenie nového hesla:</span>
-                <input style="grid-row: 7" name="zmenaPotvrHesla" type="password" pattern=".{8,}" placeholder="Potvrdenie nového hesla">
-                <button style="grid-row: 8; grid-column: 2/3" class="btn-reg-log">Potvrdenie zmien údajov</button>
+                <input class="vstup" style="grid-row: 7; grid-column: 2" name="zmenaPotvrHesla" type="password" pattern=".{8,}" placeholder="Potvrdenie nového hesla">
+                <button style="grid-row: 8; grid-column: 2/3; max-width: 130px;" class="btn-reg-log">Potvrdenie zmien</button>
             </div>
         </form>
 

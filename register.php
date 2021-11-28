@@ -85,7 +85,7 @@ if(isset($_POST['UserName'])) {
                 if(isset($_POST['UserName'])){
                     if(!$reg->porovnanieHesiel()) {
                 ?>
-                        <p class="password-check" style="grid-row: 7;grid-column: 2/4;">Heslá nie sú zhodné.</p>
+                        <p class="all-check" style="grid-row: 7;grid-column: 2/4;">Heslá nie sú zhodné.</p>
                 <?php
                     }
                     $meno = $reg->getMeno();
@@ -95,10 +95,8 @@ if(isset($_POST['UserName'])) {
                     $select->bind_param('s', $mail);
                     if($select->execute()){
                         $select->store_result();
-                        /*$select->bind_result($vysl);
-                        $select->fetch();*/
                         if($select->num_rows != 0) { ?>
-                            <p class="password-check" style="grid-row: 5; grid-column: 2/4">Zadaný email sa už používa.</p>
+                            <p class="all-check" style="grid-row: 5; grid-column: 2/4">Zadaný email sa už používa.</p>
                             <?php
                         }
                     }
@@ -107,7 +105,7 @@ if(isset($_POST['UserName'])) {
                     if($select->execute()) {
                         $select->store_result();
                         if($select->num_rows != 0) { ?>
-                            <p class="password-check" style="grid-row: 3; grid-column: 2/4">Používateľské meno je už zabraté.</p>
+                            <p class="all-check" style="grid-row: 3; grid-column: 2/4">Používateľské meno je už zabraté.</p>
                             <?php
                         } else {
                             if(strlen($meno) >= 3 && strlen($meno) <= 20 && strlen($mail) != 0 && strlen($hsl) >= 8) {
