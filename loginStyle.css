@@ -40,8 +40,13 @@ div#register {
 
 div#userInfo {
     grid-template-columns: [first] 35%[second] 25%[third] auto;
-    grid-template-rows: [row1-start] 50px [row2-start] 20% [row3-start] 30px [row4-start] auto [row5-start] 30px
-        [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 50px;
+    grid-template-rows: [row1-start] 50px [row2-start] 15% [row3-start] 30px [row4-start] auto [row5-start] 30px
+        [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 20px;
+}
+
+div#odstranenie-uctu {
+    grid-template-columns: [first] 35% [second] auto [third] 35%;
+    grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px;
 }
 
 .all-check {

@@ -2,7 +2,7 @@ body {
     display: grid;
     background-color: #354E59;
     grid-template-columns: [first] 20%[second] 60% [third] 20% ;
-    grid-template-rows: [row1-start] 1% [row2-start] 100vh [row3-start] 1%;
+    grid-template-rows: [row1-start] 1% [row2-start] 120vh [row3-start] 1%;
 }
 
 /*

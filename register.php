@@ -113,7 +113,9 @@ if(isset($_POST['UserName'])) {
                                 $insert = $pripojenie->prepare("INSERT INTO pouzivatel (meno,email,heslo) VALUES (?,?,?)");
                                 $insert->bind_param('sss',$meno,$mail, $hsl);
                                 $insert->execute();
-                                $reg->vycisti();;
+                                $message = "Účet bol vytvorený.";
+                                echo "<script type='text/javascript'>alert('$message');</script>";
+                                $reg->vycisti();
                             }
                         }
                     }
