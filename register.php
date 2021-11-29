@@ -110,8 +110,9 @@ if(isset($_POST['UserName'])) {
                         } else {
                             if(strlen($meno) >= 3 && strlen($meno) <= 20 && strlen($mail) != 0 && strlen($hsl) >= 8) {
                                 $hsl = password_hash($hsl, PASSWORD_BCRYPT);
-                                $insert = $pripojenie->prepare("INSERT INTO pouzivatel (meno,email,heslo) VALUES (?,?,?)");
-                                $insert->bind_param('sss',$meno,$mail, $hsl);
+                                $insert = $pripojenie->prepare("INSERT INTO pouzivatel (meno,email,heslo,typ) VALUES (?,?,?,?)");
+                                $typ = "pouzivatel";
+                                $insert->bind_param('ssss',$meno,$mail, $hsl, $typ);
                                 $insert->execute();
                                 $message = "Účet bol vytvorený.";
                                 echo "<script type='text/javascript'>alert('$message');</script>";
