@@ -49,6 +49,11 @@ div#odstranenie-uctu {
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px;
 }
 
+div#clanokCreate {
+    grid-template-columns: [first] 35% [second] auto [third] 25%;
+    grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px [row4-start] 30px [row5-start] 30px [row6-start] 30px;
+}
+
 .all-check {
     color: red;
     align-self: center;

@@ -50,6 +50,16 @@ session_start();
             ?>
         </div>
 
+        <?php
+            if(isset($_SESSION['Email'])) {
+                ?>
+                    <div style="background-color: #b7c7c9; text-align: end;border-radius: 5px;">
+                        <a href="pridatClanok.php" class="fa fa-pencil" aria-hidden="true">Vytvoriť článok</a>
+                    </div>
+                <?php
+            }
+        ?>
+
         <div>
             <?php
             $selectPocetKategorii = $pripojenie->prepare("SELECT count(id_kategorie) from kategorie");
