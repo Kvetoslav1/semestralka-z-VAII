@@ -51,57 +51,65 @@ session_start();
         </div>
 
         <div>
-            <table>
-                <tr>
-                    <th>Všeobecné</th>
-                    <th>Témy</th>
-                    <th>Príspevky</th>
-                </tr>
-                <tr>
-                    <td> <a href="url">Pravidlá</a>
-                        <div>
-                            Základné pravidlá komunity
-                        </div>
-                    </td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td> <a href="url">Oznámenia</a>
-                        <div>
-                            Všetky oznámenia týkajúce sa tohto fóra a novinky
-                        </div>
-                    </td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-            </table>
+            <?php
+            $selectPocetKategorii = $pripojenie->prepare("SELECT count(id_kategorie) from kategorie");
+            if($selectPocetKategorii->execute()) {
+                $selectPocetKategorii->store_result();
+                $selectPocetKategorii->bind_result($pocetKategorii);
+                $selectPocetKategorii->fetch();
+            }
+            //prvý for na výpis kategórií
+            for($i = 0; $i < $pocetKategorii; $i++) {
+                $selectKategoria = $pripojenie->prepare("SELECT nazov_kategorie, id_kategorie from kategorie Limit ?,1");
+                $selectKategoria->bind_param('i', $i);
+                if($selectKategoria->execute()) {
+                    $selectKategoria->store_result();
+                    $selectKategoria->bind_result($nazovKategorie, $idKategorie);
+                    $selectKategoria->fetch();
+                }
+                ?>
+                <table>
+                    <tr>
+                        <th><?php echo $nazovKategorie ?></th>
+                        <th>Témy</th>
+                        <th>Príspevky</th>
+                    </tr>
+                    <?php
+                $selectPocetClankov = $pripojenie->prepare("SELECT count(nazov_clanku) from clanky where id_kategorie = ?");
+                $selectPocetClankov->bind_param('i', $idKategorie);
+                if($selectPocetClankov->execute()) {
+                    $selectPocetClankov->store_result();
+                    $selectPocetClankov->bind_result($poceClankov);
+                    $selectPocetClankov->fetch();
+                    //vyberanie názvov článkov z databázy po jednom
+                    for($j = 0; $j < $poceClankov; $j++) {
+                        $selectClanky = $pripojenie->prepare("select nazov_clanku, nadpis from clanky 
+                        join kategorie k on clanky.id_kategorie = k.id_kategorie where k.id_kategorie = ? limit ?,1;");
+                        $selectClanky->bind_param('ii', $idKategorie, $j);
+                        if($selectClanky->execute()) {
+                            $selectClanky->store_result();
+                            $selectClanky->bind_result($nazovClanku, $nadpisClanku);
+                            $selectClanky->fetch();
+                        }
+                        ?>
+                        <tr>
+                            <td> <a href="clanky.php?cl=<?php echo $nazovClanku ?>"><?php echo $nazovClanku ?></a>
+                                <div>
+                                    <?php echo $nadpisClanku ?>
+                                </div>
+                            </td>
+                            <td>0</td>
+                            <td>0</td>
+                        </tr>
+                    <?php
+                    }
 
-            <table>
-                <tr>
-                    <th>Novinky zo sveta</th>
-                    <th>Témy</th>
-                    <th>Príspevky</th>
-                </tr>
-                <tr>
-                    <td> <a href="url">1. novinka</a>
-                        <div>
-                            Prvá nová vec
-                        </div>
-                    </td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td> <a href="url">2. novinka</a>
-                        <div>
-                            Druhá nová vec
-                        </div>
-                    </td>
-                    <td>0</td>
-                    <td>0</td>
-                </tr>
-            </table>
+                }
+                ?>
+                </table>
+            <?php
+            }
+            ?>
         </div>
 
         <footer class="koniec">
