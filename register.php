@@ -108,15 +108,20 @@ if(isset($_POST['UserName'])) {
                             <p class="all-check" style="grid-row: 3; grid-column: 2/4">Používateľské meno je už zabraté.</p>
                             <?php
                         } else {
-                            if(strlen($meno) >= 3 && strlen($meno) <= 20 && strlen($mail) != 0 && strlen($hsl) >= 8) {
+                            if(strlen($meno) >= 3 && strlen($meno) <= 20 && strlen($mail) != 0 && strlen($hsl) >= 8
+                                && $reg->porovnanieHesiel() && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)) {
                                 $hsl = password_hash($hsl, PASSWORD_BCRYPT);
                                 $insert = $pripojenie->prepare("INSERT INTO pouzivatel (meno,email,heslo,typ) VALUES (?,?,?,?)");
                                 $typ = "pouzivatel";
                                 $insert->bind_param('ssss',$meno,$mail, $hsl, $typ);
-                                $insert->execute();
-                                $message = "Účet bol vytvorený.";
-                                echo "<script type='text/javascript'>alert('$message');</script>";
+                                if($insert->execute()) {
+                                    $message = "Účet bol vytvorený.";
+                                    echo "<script type='text/javascript'>alert('$message');</script>";
+                                }
                                 $reg->vycisti();
+                            } else {
+                                $message = "Účet nebol vytvorený!.";
+                                echo "<script type='text/javascript'>alert('$message');</script>";
                             }
                         }
                     }
