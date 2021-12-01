@@ -63,7 +63,7 @@ if(isset($_POST['UserName'])) {
                 <h2 class="header" style="grid-column: 1/4;">Registrácia</h2>
                 <span id="resolution-change">
                     Berte na vedomie, že musíte uviesť platnú e-mailovú adresu.
-                    Na túto e-mailovú adresu vám bude zaslaný mail, ktorý je potrebný na aktiváciu účtu.</span>
+                    Táto e-mailová adresa nesmie byť zabratá a vaše príspevku budu zobrazované spolu s ňou.</span>
 
                 <span style="grid-area: 3/1; grid-row: 3" class="bold">Uživateľské meno:</span>
                 <input name="UserName" style="grid-row: 3;" type="text" placeholder="Username" required class="vstup" minlength="3" maxlength="20">

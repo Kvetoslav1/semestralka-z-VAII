@@ -52,16 +52,26 @@ if(isset($_SESSION['Email'])) {
                                     if(password_verify($_POST['password'],$heslo)) {
                                         $_SESSION['Email'] = $email;
                                         header("Location: index.php");
-                                    } else { ?>
-                                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané heslo.</p>
-                                        <?php
+                                    } else {
+                                        $hlaskaHeslo = "Nesprávne zadané heslo.";
                                     }
-                                } else { ?>
-                                    <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;">Nesprávne zadané meno.</p>
-                                    <?php
+                                } else {
+                                    $hlaskaMeno = "Nesprávne zadané meno";
                                 }
                             }
+                        } else {
+                            $hlaskaMeno = "Meno alebo heslo nie sú správne";
                         }
+                    }
+                    if(strlen($hlaskaHeslo) != 0) {
+                        ?>
+                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaskaHeslo ?></p>
+                        <?php
+                    }
+                    if(strlen($hlaskaMeno) != 0) {
+                        ?>
+                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaskaMeno ?></p>
+                        <?php
                     }
                     ?>
                     <H2 class="header">Prihlásiť sa</H2>
