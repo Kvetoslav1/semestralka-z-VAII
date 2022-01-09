@@ -1,8 +1,11 @@
 <?php
 require "pripojenie.php";
 session_start();
+if(!isset($_SESSION['Email'])) {
+    header("Location: login.php");
+}
 if(isset($_GET['cl'])) {
-    $nazovClanku = $_GET['cl'];
+    $nazovCLanku = $_GET['cl'];
 }
 ?>
 <!DOCTYPE html>
@@ -11,10 +14,20 @@ if(isset($_GET['cl'])) {
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="zaklad.css" rel="stylesheet" type="text/css">
-    <link href="style.css" rel="stylesheet" type="text/css">
+    <link href="gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
+
+<script type="text/javascript">
+    function limitText(textArea, aktPocet, maxPocet) {
+        if (textArea.value.length > maxPocet) {
+            textArea.value = textArea.value.substring(0, maxPocet);
+        } else {
+            aktPocet.value = maxPocet - textArea.value.length;
+        }
+    }
+</script>
 
 <body>
 
@@ -53,15 +66,30 @@ if(isset($_GET['cl'])) {
             ?>
         </div>
 
-        <?php
-        if(isset($_SESSION['Email'])) {
-            ?>
-            <div style="background-color: #b7c7c9; text-align: end;border-radius: 5px;">
-                <a href="pridatPost.php?cl=<?php echo $nazovClanku ?>" class="fa fa-pencil" aria-hidden="true">Vytvoriť post do článku</a>
+        <form method="post" enctype="application/x-www-form-urlencoded">
+            <div id="pridajPost" class="gridy">
+                <H2 class="header">Pridanie postu do článku <?php if (isset($nazovCLanku)) {
+                        echo $nazovCLanku;
+                    } ?></H2>
+                <span style="padding-top: 5px; grid-column: 1" class="bold">Názov postu:</span>
+                <label style="grid-row: 2; grid-column: 2">
+                    <input name="post" type="text" placeholder="Názov postu" required class="vstup" maxlength="60">
+                </label>
+
+                <span style="padding-top: 5px; grid-column: 1" class="bold">Obsah článku:</span>
+                <label style="grid-row: 3; grid-column: 2/4">
+                    <textarea style="width: 90%; height: 100%;"
+                              name="textArea" onKeyDown="limitText(this.form.textArea,this.form.countdown,100);"
+                              onKeyUp="limitText(this.form.textArea,this.form.countdown,100);">
+                    </textarea>
+                </label>
+                <div style="grid-row: 4; grid-column: 1/4">
+                    <br >(Maximálny počet znakov je: 100)
+                    <span>Máte ešte <input readonly type="text" name="countdown" size="1" value="100"> voľných znakov.</span><br>
+                </div>
+                <button class="btn-reg-log" style="grid-area: 5/2;">Vytvoriť článok</button>
             </div>
-            <?php
-        }
-        ?>
+        </form>
 
         <footer class="koniec">
             ©2021 Author: Kvetoslav Varga

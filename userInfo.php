@@ -11,7 +11,7 @@ if(!isset($_SESSION['Email'])) {
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="zaklad.css" rel="stylesheet" type="text/css">
-    <link href="girdStyles.css" rel="stylesheet" type="text/css">
+    <link href="gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -65,8 +65,8 @@ if(!isset($_SESSION['Email'])) {
                             if($updateMeno->execute()) {
                                 $updateMeno->store_result();
                                 if($updateMeno->num_rows == 0) {
-                                    $updateMeno->prepare("UPDATE pouzivatel SET meno = ?");
-                                    $updateMeno->bind_param('s', $_POST['zmenaMena']);
+                                    $updateMeno->prepare("UPDATE pouzivatel SET meno = ? where email = ?");
+                                    $updateMeno->bind_param('ss', $_POST['zmenaMena'], $_SESSION['Email']);
                                     if($updateMeno->execute()) {
                                         header("Refresh:0");
                                         $message = "Meno bolo úspešne zmenené.";

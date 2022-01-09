@@ -1,6 +1,8 @@
 version: '2'
 services:
   DB-server:
+    ports:
+      - "3306:3306"
     image: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=password

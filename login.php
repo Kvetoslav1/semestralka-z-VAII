@@ -11,7 +11,7 @@ if(isset($_SESSION['Email'])) {
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="zaklad.css" rel="stylesheet" type="text/css">
-    <link href="girdStyles.css" rel="stylesheet" type="text/css">
+    <link href="gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -42,11 +42,11 @@ if(isset($_SESSION['Email'])) {
                     <?php
                     if(isset($_POST['UserName'])) {
                         if(strlen($_POST['UserName']) >= 3 && strlen($_POST['password']) >= 8) {
-                            $select = $pripojenie->prepare("SELECT meno, heslo, email FROM pouzivatel where meno = ?");
+                            $select = $pripojenie->prepare("SELECT heslo, email FROM pouzivatel where email = ?");
                             $select->bind_param('s', $_POST['UserName']);
                             if($select->execute()) {
                                 $select->store_result();
-                                $select->bind_result($meno, $heslo, $email);
+                                $select->bind_result($heslo, $email);
                                 $select->fetch();
                                 if($select->num_rows == 1) {
                                     if(password_verify($_POST['password'],$heslo)) {
@@ -56,11 +56,11 @@ if(isset($_SESSION['Email'])) {
                                         $hlaskaHeslo = "Nesprávne zadané heslo.";
                                     }
                                 } else {
-                                    $hlaskaMeno = "Nesprávne zadané meno";
+                                    $hlaskaMeno = "Nesprávne zadaný email";
                                 }
                             }
                         } else {
-                            $hlaskaMeno = "Meno alebo heslo nie sú správne";
+                            $hlaskaMeno = "Email alebo heslo nie sú správne";
                         }
                     }
                     if(strlen($hlaskaHeslo) != 0) {

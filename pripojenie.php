@@ -1,5 +1,5 @@
 <?php
-$servername = "semestralka-DB-server-1";
+$servername = "semestralka_DB-server_1";
 $username = "root";
 $password = "password";
 $database = "Database";

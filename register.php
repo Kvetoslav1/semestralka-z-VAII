@@ -12,19 +12,6 @@ if(isset($_POST['UserName'])) {
     $reg->setEmail($_POST['Email']);
     $reg->setHeslo($_POST['Password']);
     $reg->setPotvrHeslo($_POST['ConfirmPassword']);
-
-    /*$servername = "semestralka-DB-server-1";
-    $username = "root";
-    $password = "password";
-    $database = "Database";
-
-// Create connection
-    $pripojenie = new mysqli($servername, $username, $password, $database);
-
-// Check connection
-    if ($pripojenie->connect_error) {
-        die("Connection failed: " . $pripojenie->connect_error);
-    }*/
 }
 ?>
 <!DOCTYPE html>
@@ -33,7 +20,7 @@ if(isset($_POST['UserName'])) {
     <meta charset="UTF-8">
     <title>Title</title>
     <link href="zaklad.css" rel="stylesheet" type="text/css">
-    <link href="girdStyles.css" rel="stylesheet" type="text/css">
+    <link href="gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -63,7 +50,8 @@ if(isset($_POST['UserName'])) {
                 <h2 class="header" style="grid-column: 1/4;">Registrácia</h2>
                 <span id="resolution-change">
                     Berte na vedomie, že musíte uviesť platnú e-mailovú adresu.
-                    Táto e-mailová adresa nesmie byť zabratá a vaše príspevku budu zobrazované spolu s ňou.</span>
+                    Táto e-mailová adresa nesmie byť zabratá a vaše príspevku budu zobrazované spolu s ňou.
+                    Zároveň ju budete používať na príhlásenie do vašeho účtu.</span>
 
                 <span style="grid-area: 3/1; grid-row: 3" class="bold">Uživateľské meno:</span>
                 <input name="UserName" style="grid-row: 3;" type="text" placeholder="Username" required class="vstup" minlength="3" maxlength="20">

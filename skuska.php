@@ -15,5 +15,5 @@ require "pripojenie.php";
           onKeyUp="limitText(this.form.textArea,this.form.countdown,100);">
 </textarea>
     <br>(Maximálny počet znakov je: 100)<br>
-    Máte ešte <input readonly type="text" name="countdown" size="1" value="100"> voľných znakov.</font>
+    Máte ešte <input readonly type="text" name="countdown" size="1" value="100"> voľných znakov.
 </form>
