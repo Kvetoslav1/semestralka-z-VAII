@@ -1,8 +1,8 @@
 <?php
-$servername = "semestralka_DB-server_1";
-$username = "root";
-$password = "password";
-$database = "Database";
+include "pracovanie_s_databazou/pripojenieDatabaza.php";
+
+$pripojenieDatabaza = new pripojenieDatabaza();
+
 global $pripojenie;
-// Create connection
-$pripojenie = new mysqli($servername, $username, $password, $database);
+
+$pripojenie = new mysqli($pripojenieDatabaza->getServName(), $pripojenieDatabaza->getUserName(), $pripojenieDatabaza->getPass(), $pripojenieDatabaza->getDatabase());

@@ -1,17 +1,20 @@
 <?php
 require "pripojenie.php";
+require "pracovanie_s_databazou/pridavanie_kontrola_pouzivatelov/prihlasovanie.php";
+
 session_start();
 if(isset($_SESSION['Email'])) {
     header("Location: index.php");
 }
+$prihlasovanie = new prihlasovanie();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="zaklad.css" rel="stylesheet" type="text/css">
-    <link href="gridStyle.css" rel="stylesheet" type="text/css">
+    <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
+    <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -22,56 +25,22 @@ if(isset($_SESSION['Email'])) {
 
     <div class="odsadenie">
 
-        <div>
-            <img src="space1.jpg" class="slideShow" alt="Image not found">
-            <img src="space2.jpg" class="slideShow" alt="Image not found">
-            <img src="space3.jpg" class="slideShow" alt="Image not found">
-            <script src="slideShowScript.js"></script>
-        </div>
-
-        <div class="btn-group">
-            <button onclick="document.location='index.php'">Články/Podpora</button>
-            <button onclick="document.location='info.php'">Info</button>
-            <button onclick="document.location='register.php'"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrácia</button>
-            <button onclick="document.location='login.php'"><i class="fa fa-sign-in" aria-hidden="true"></i> Prihlásenie</button>
-        </div>
+        <?php include "header.php"; ?>
 
         <div>
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div id="sing-up" class="gridy">
                     <?php
-                    if(isset($_POST['UserName'])) {
-                        if(strlen($_POST['UserName']) >= 3 && strlen($_POST['password']) >= 8) {
-                            $select = $pripojenie->prepare("SELECT heslo, email FROM pouzivatel where email = ?");
-                            $select->bind_param('s', $_POST['UserName']);
-                            if($select->execute()) {
-                                $select->store_result();
-                                $select->bind_result($heslo, $email);
-                                $select->fetch();
-                                if($select->num_rows == 1) {
-                                    if(password_verify($_POST['password'],$heslo)) {
-                                        $_SESSION['Email'] = $email;
-                                        header("Location: index.php");
-                                    } else {
-                                        $hlaskaHeslo = "Nesprávne zadané heslo.";
-                                    }
-                                } else {
-                                    $hlaskaMeno = "Nesprávne zadaný email";
-                                }
-                            }
+                    if(isset($_POST['UserName']) && strlen($_POST['UserName']) >= 3 && strlen($_POST['password']) >= 8 && isset($pripojenie)) {
+                        if($prihlasovanie->kontrolaPrihlasenie($pripojenie, $_POST['UserName'], $_POST['password'])) {
+                            $_SESSION['Email'] = $_POST['UserName'];
+                            header("Location: index.php");
                         } else {
-                            $hlaskaMeno = "Email alebo heslo nie sú správne";
+                            $hlaska = $prihlasovanie->getHlaska();
+                            ?>
+                            <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaska ?></p>
+                            <?php
                         }
-                    }
-                    if(strlen($hlaskaHeslo) != 0) {
-                        ?>
-                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaskaHeslo ?></p>
-                        <?php
-                    }
-                    if(strlen($hlaskaMeno) != 0) {
-                        ?>
-                        <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaskaMeno ?></p>
-                        <?php
                     }
                     ?>
                     <H2 class="header">Prihlásiť sa</H2>
