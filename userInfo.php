@@ -1,9 +1,14 @@
 <?php
 require "pripojenie.php";
+require "pracovanie_s_databazou/praca_s_pouzivatelom/upravaUdajov.php";
 session_start();
 if(!isset($_SESSION['Email'])) {
     header("Location: login.php");
 }
+$uprava = new upravaUdajov();
+ if(isset($_POST['zmazanie']) && isset($pripojenie)) {
+     $uprava->odstranUcet($pripojenie, $_SESSION['Email']);
+ }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,67 +27,32 @@ if(!isset($_SESSION['Email'])) {
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php"; ?>
 
         <div>
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div id="userInfo" class="gridy" style="grid-row: 2/3">
                     <?php
                     $chybnaHlaska = null;
-                    if(strlen($_POST['zmenaMena']) != 0){
-                        if(strlen($_POST['zmenaMena']) >= 3) {
+                    if(strlen($_POST['zmenaMena']) >= 3 && isset($pripojenie)){
                             //kontrola ci nie je meno zabrate
-                            $updateMeno = $pripojenie->prepare("SELECT meno FROM pouzivatel where meno = ?");
-                            $updateMeno->bind_param('s', $_POST['zmenaMena']);
-                            if($updateMeno->execute()) {
-                                $updateMeno->store_result();
-                                if($updateMeno->num_rows == 0) {
-                                    $updateMeno->prepare("UPDATE pouzivatel SET meno = ? where email = ?");
-                                    $updateMeno->bind_param('ss', $_POST['zmenaMena'], $_SESSION['Email']);
-                                    if($updateMeno->execute()) {
-                                        header("Refresh:0");
-                                        $message = "Meno bolo úspešne zmenené.";
-                                        echo "<script type='text/javascript'>alert('$message');</script>";
-                                    }
-                                } else {
-                                    $chybnaHlaska = "Meno sa už používa";
-                                }
-                            }
+                        if($uprava->zmenMeno($pripojenie, $_POST['zmenaMena'], $_SESSION['Email'])) {
+                            header("Refresh:0");
+                            $message = "Meno bolo úspešne zmenené.";
+                            echo "<script type='text/javascript'>alert('$message');</script>";
                         } else {
-                            $chybnaHlaska = "Meno je príliž krátke";
-                        }
-                        if(strlen($chybnaHlaska) != 0) {
+                            $chybnaHlaska = "Meno sa už používa";
                             ?>
                             <span class="all-check" style="grid-row: 3; grid-column: 2/4"> <?php echo $chybnaHlaska ?></span>
                             <?php
                         }
-
                     }
-                    if(strlen($_POST['zmenaHesla']) != 0) {
-                        if(strlen($_POST['zmenaHesla']) >= 8) {
-                            if(strlen($_POST['zmenaPotvrHesla']) != 0) {
-                                if(strlen($_POST['zmenaPotvrHesla']) >= 8) {
-                                    if($_POST['zmenaHesla'] == $_POST['zmenaPotvrHesla']) {
-                                        $updateHeslo = $pripojenie->prepare("UPDATE pouzivatel set heslo = ? where email = ?");
-                                        $hsl = password_hash($_POST['zmenaHesla'], PASSWORD_BCRYPT);
-                                        $updateHeslo->bind_param('ss', $hsl, $_SESSION['Email']);
-                                        if($updateHeslo->execute()) {
-                                            $message = "Heslo bolo úspešne zmenené.";
-                                            echo "<script type='text/javascript'>alert('$message');</script>";
-                                        }
-                                    } else {
-                                        $chybnaHlaska = "Heslá sa nerovnajú";
-                                    }
-                                } else {
-                                    $chybnaHlaska = "Potvrdzovacie heslo je krátke";
-                                }
-                            } else {
-                                $chybnaHlaska = "Heslá sa nezhodujú";
-                            }
+                    if(strlen($_POST['zmenaHesla']) >= 8 && strlen($_POST['zmenaPotvrHesla']) >= 8 && isset($pripojenie)) {
+                        if($uprava->zmenHeslo($pripojenie, $_SESSION['Email'], $_POST['zmenaHesla'], $_POST['zmenaPotvrHesla'])) {
+                            $message = "Heslo bolo úspešne zmenené.";
+                            echo "<script type='text/javascript'>alert('$message');</script>";
                         } else {
-                            $chybnaHlaska = "Heslo je krátke";
-                        }
-                        if(strlen($chybnaHlaska) != 0) {
+                            $chybnaHlaska = "Heslá sa nezhodujú!";
                             ?>
                             <span class="all-check" style="grid-row: 7; grid-column: 2/4"> <?php echo $chybnaHlaska ?></span>
                             <?php
@@ -106,20 +76,16 @@ if(!isset($_SESSION['Email'])) {
                 </div>
             </form>
 
-            <div class="gridy" id="odstranenie-uctu" style="grid-row: 3">
-                <h2 class="header" style="grid-column: 1/4;">Zmazanie účtu.</h2>
-                <span id="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
+
+            <form method="post" enctype="application/x-www-form-urlencoded">
+                <div class="gridy" id="odstranenie-uctu" style="grid-row: 3">
+                    <h2 class="header" style="grid-column: 1/4;">Zmazanie účtu.</h2>
+                    <span id="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
                         Ak naozaj chcete zmazať svoj účet tak sa spolu s ním zmažú aj všetky články, ktoré ste vytvorili
-                a aj odpovede, ktoré ste napísali. Ak si naozaj prajete zmazať účet kliknite na tlačidlo ZMAZAŤ ÚČET.</span>
-                <button style="grid-column: 2/3; max-width: 130px" class="btn-reg-log" onclick="potvrdenieOdstranenia()">Zmazanie účtu</button>
-                <script>
-                    function potvrdenieOdstranenia () {
-                        if (confirm("Naozaj si prajete zamazať Váš účet?")) {
-                            window.location.href = 'delete.php';
-                        }
-                    }
-                </script>
-            </div>
+                    a aj odpovede, ktoré ste napísali. Ak si naozaj prajete zmazať účet kliknite na tlačidlo ZMAZAŤ ÚČET.</span>
+                    <button name="zmazanie" type="submit" style="grid-column: 2/3; max-width: 130px" class="btn-reg-log" onclick="potvrdenieOdstranenia()">Zmazanie účtu</button>
+                </div>
+            </form>
         </div>
 
 

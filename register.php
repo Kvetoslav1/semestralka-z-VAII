@@ -1,5 +1,5 @@
     <?php
-    require "pracovanie_s_databazou/pridavanie_kontrola_pouzivatelov/registracia.php";
+    require "pracovanie_s_databazou/praca_s_pouzivatelom/registracia.php";
     require "pripojenie.php";
     session_start();
     if(isset($_SESSION['Email'])) {
@@ -27,7 +27,7 @@
 
         <div class="odsadenie">
 
-            <?php include "header.php"; ?>
+            <?php require "zakladnaStranka/header.php"; ?>
 
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div id="register" class="gridy">

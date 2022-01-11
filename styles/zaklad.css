@@ -100,12 +100,12 @@ tlačítka na začiatku stránky
 }
 
 @media (max-height: 720px) {
-    .btn-group > :nth-child(2){
+    /*.btn-group > :nth-child(2){
         margin-right: unset;
     }
     .btn-group {
         flex-direction: column;
-    }
+    }*/
     body {
         grid-template-columns: [first] 5%[second] 90% [third] 5%;
         grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;

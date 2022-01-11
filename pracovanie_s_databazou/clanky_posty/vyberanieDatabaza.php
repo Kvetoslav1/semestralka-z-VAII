@@ -58,7 +58,7 @@ class vyberanieDatabaza
         return $this->pocetKategorii;
     }
 
-    public function pocetKat($pripojenie) {
+    public function pocetKat($pripojenie): void {
         $selectPocetKategorii = $pripojenie->prepare("SELECT count(id_kategorie) from kategorie");
         if ($selectPocetKategorii->execute()) {
             $selectPocetKategorii->store_result();
@@ -67,7 +67,7 @@ class vyberanieDatabaza
         }
     }
 
-    public function vyberKategoriu($pripojenie, $cisloKategorie) {
+    public function vyberKategoriu($pripojenie, $cisloKategorie): void {
         $selectKategoria = $pripojenie->prepare("SELECT nazov_kategorie, id_kategorie from kategorie Limit ?,1");
         $selectKategoria->bind_param('i', $cisloKategorie);
         if ($selectKategoria->execute()) {
@@ -77,7 +77,7 @@ class vyberanieDatabaza
         }
     }
 
-    public function pocetClankovKategorie($pripojenie) {
+    public function pocetClankovKategorie($pripojenie): void {
         $selectPocetClankov = $pripojenie->prepare("SELECT count(nazov_clanku) from clanky where id_kategorie = ?");
         $selectPocetClankov->bind_param('i', $this->idKategorie);
         if ($selectPocetClankov->execute()) {
@@ -87,7 +87,7 @@ class vyberanieDatabaza
         }
     }
 
-    public function vyberClanky($pripojenie, $cisloKategorie) {
+    public function vyberClanky($pripojenie, $cisloKategorie): void {
         $selectClanky = $pripojenie->prepare("select nazov_clanku, nadpis from clanky 
                         join kategorie k on clanky.id_kategorie = k.id_kategorie where k.id_kategorie = ? limit ?,1;");
         $selectClanky->bind_param('ii', $this->idKategorie, $cisloKategorie);
@@ -95,6 +95,22 @@ class vyberanieDatabaza
             $selectClanky->store_result();
             $selectClanky->bind_result($this->nazovClanku, $this->nadpisClanku);
             $selectClanky->fetch();
+        }
+    }
+
+    public function dajKategorie($pripojenie):void {
+        $this->pocetKat($pripojenie);
+        for($i = 0; $i < $this->pocetKategorii; $i++) {
+            $selectKategoria = $pripojenie->prepare("SELECT nazov_kategorie from kategorie limit ?,1");
+            $selectKategoria->bind_param('i', $i);
+            if($selectKategoria->execute()) {
+                $selectKategoria->store_result();
+                $selectKategoria->bind_result($this->nazovKategorie);
+                $selectKategoria->fetch();
+                ?>
+                <option><?php echo $this->nazovKategorie ?></option>
+                <?php
+            }
         }
     }
 }

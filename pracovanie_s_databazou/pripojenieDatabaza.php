@@ -7,19 +7,20 @@ class pripojenieDatabaza
     private string $password = "password";
     private string $database = "Database";
 
-    public function getServName () {
+    public function getServName (): string
+    {
         return $this->servername;
     }
 
-    public function getUserName () {
+    public function getUserName (): string {
         return $this->username;
     }
 
-    public function getPass () {
+    public function getPass (): string {
         return $this->password;
     }
 
-    public function getDatabase () {
+    public function getDatabase (): string {
         return $this->database;
     }
 }

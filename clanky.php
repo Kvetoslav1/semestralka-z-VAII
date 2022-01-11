@@ -22,7 +22,7 @@ if(isset($_GET['cl'])) {
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php";  ?>
 
         <?php
         if(isset($_SESSION['Email'])) {

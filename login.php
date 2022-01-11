@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/pridavanie_kontrola_pouzivatelov/prihlasovanie.php";
+require "pracovanie_s_databazou/praca_s_pouzivatelom/prihlasovanie.php";
 
 session_start();
 if(isset($_SESSION['Email'])) {
@@ -25,7 +25,7 @@ $prihlasovanie = new prihlasovanie();
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php"; ?>
 
         <div>
             <form method="post" enctype="application/x-www-form-urlencoded">

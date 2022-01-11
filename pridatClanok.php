@@ -1,5 +1,8 @@
 <?php
 require "pripojenie.php";
+include "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
+include "pracovanie_s_databazou/clanky_posty/pridavanieClanku.php";
+
 session_start();
 if(!isset($_SESSION['Email'])) {
     header("Location: index.php");
@@ -22,33 +25,19 @@ if(!isset($_SESSION['Email'])) {
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php"; ?>
 
         <form method="post" enctype="application/x-www-form-urlencoded">
             <div id="clanokCreate" class="gridy">
                 <h2 class="header" style="grid-column: 1/4;">Vytváranie článku</h2>
-                <span id="resolution-change" style="grid-row: 2; grid-column: 1/4">Pri vytvárani článku zvolťe správnu kategóriu do ktorej článok patrí.
+                <span id="resolution-change" style="grid-row: 2; grid-column: 1/4">Pri vytvárani článku zvoľte správnu kategóriu do ktorej článok patrí.
                     V opačnom prípade bude váš článok zmazaný administrátorom stránky.</span>
                 <span style="grid-row: 3" class="bold">Výber kategórie:</span>
                 <select class="vstup" name="kategoriaClanku">
                     <?php
-                    $selectPocet = $pripojenie->prepare("SELECT count(nazov_kategorie) from kategorie");
-                    if($selectPocet->execute()) {
-                        $selectPocet->store_result();
-                        $selectPocet->bind_result($pocetKat);
-                        $selectPocet->fetch();
-                        for($i = 0; $i < $pocetKat; $i++) {
-                            $selectKategoria = $pripojenie->prepare("SELECT nazov_kategorie from kategorie limit ?,1");
-                            $selectKategoria->bind_param('i', $i);
-                            if($selectKategoria->execute()) {
-                                $selectKategoria->store_result();
-                                $selectKategoria->bind_result($nazovKat);
-                                $selectKategoria->fetch();
-                                ?>
-                                <option><?php echo $nazovKat ?></option>
-                                <?php
-                            }
-                        }
+                    $vyberanie = new vyberanieDatabaza();
+                    if(isset($pripojenie)) {
+                        $vyberanie->dajKategorie($pripojenie);
                     }
                     ?>
                 </select>
@@ -61,32 +50,13 @@ if(!isset($_SESSION['Email'])) {
         </form>
         <?php
 
-        if(isset($_POST['kategoriaClanku'])) {
-            if(strlen($_POST['kategoriaClanku']) > 0) {
-                if(strlen($_POST['nazovClanku']) > 3) {
-                    if(strlen($_POST['nadpisClanku']) > 3) {
-                        //vytiahnutie ID kategorie
-                        $selectID = $pripojenie->prepare("select id_kategorie from kategorie where nazov_kategorie = ?");
-                        $selectID->bind_param('s', $_POST['kategoriaClanku']);
-                        if($selectID->execute()) {
-                            $selectID->store_result();
-                            $selectID->bind_result($idKat);
-                            $selectID->fetch();
-                            $insertClanok = $pripojenie->prepare("insert into clanky (nazov_clanku, email_vytvarajuceho, id_kategorie, nadpis) values (?,?,?,?)");
-                            $insertClanok->bind_param('ssis', $_POST['nazovClanku'], $_SESSION['Email'], $idKat, $_POST['nadpisClanku']);
-                            if($insertClanok->execute()) {
-                                header("Location: index.php");
-                            }
-                    }
-                    }
-                } else {
-                    //dlzka nadpisu je menej ako 3 znaky
-                }
-            } else {
-                //vyplnenie článku
+        if(isset($_POST['kategoriaClanku']) && strlen($_POST['nazovClanku']) > 3 && strlen($_POST['nadpisClanku']) > 3) {
+            //vytiahnutie ID kategorie
+            $pridajClanok = new pridavanieClanku();
+            if(isset($pripojenie)) {
+                $pridajClanok->pridajClanok($pripojenie, $_POST['nazovClanku'], $_SESSION['Email'], $vyberanie->getIdKategorie(), $_POST['nadpisClanku']);
             }
         }
-
         ?>
 
         <footer class="koniec">

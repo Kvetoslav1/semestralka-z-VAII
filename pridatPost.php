@@ -35,7 +35,7 @@ if(isset($_GET['cl'])) {
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php"; ?>
 
         <form method="post" enctype="application/x-www-form-urlencoded">
             <div id="pridajPost" class="gridy">

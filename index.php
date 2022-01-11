@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
 session_start();
 
 $pracovanieDatabaza = new vyberanieDatabaza();
@@ -22,7 +22,7 @@ $pracovanieDatabaza = new vyberanieDatabaza();
 
     <div class="odsadenie">
 
-        <?php include "header.php"; ?>
+        <?php require "zakladnaStranka/header.php"; ?>
 
         <?php
             if(isset($_SESSION['Email'])) {
