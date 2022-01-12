@@ -1,25 +1,30 @@
 <?php
 require "pripojenie.php";
 require "pracovanie_s_databazou/clanky_posty/pridavaniePostu.php";
+require "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
 
 session_start();
 if(!isset($_SESSION['Email'])) {
     header("Location: login.php");
 }
-if(!isset($_GET['cl'])) {
-    header("Location: index.php");
-}
-$nazovCLanku = "";
-if(isset($_GET['cl'])) {
-    $nazovCLanku = $_GET['cl'];
-    if(isset($_POST['post']) && strlen($_POST['textArea']) > 50 && isset($pripojenie)) {
-        $pridavanie = new pridavaniePostu();
-        if(!$pridavanie->pridajPost($pripojenie, $nazovCLanku, $_SESSION['Email'], $_POST['textArea'], $_POST['post'])) {
-            $hlaska = "Článok nebol pridaný!";
+$nazovClanku = "";
+$nazovPostu = "";
+$textPostu = "";
+if(isset($_GET['cl'], $_GET['np']) && isset($pripojenie)) {
+    $vyberanie = new vyberanieDatabaza();
+    $nazovClanku = $_GET['cl'];
+    $nazovPostu = $_GET['np'];
+    $textPostu = $vyberanie->dajTextPostu($pripojenie, $nazovPostu);
+    if(isset($_POST['post']) && strlen($_POST['textArea']) > 50) {
+        $update = new pridavaniePostu();
+        if(!$update->updatePost($pripojenie, $nazovPostu, $_POST['post'], $_POST['textArea'])) {
+        echo "<script type='text/javascript'>alert('Článok nebol upravený!');</script>";
         } else {
-            header("Location: index.php");
+            header("Location: clanky.php?cl=".$nazovClanku);
         }
     }
+} else {
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -54,18 +59,18 @@ if(isset($_GET['cl'])) {
         <div class="gridy" style="grid-template-columns: [first] 50% [second] 50%; grid-template-rows: [row1-start] 15px; border-radius: 10px;
             ;grid-gap: 0; margin-top: 0">
             <div>
-                <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="clanky.php?cl=<?php echo $nazovCLanku ?>">Vrátenie na článok <?php echo $nazovCLanku ?></a>
+                <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="clanky.php?cl=<?php echo $nazovClanku ?>">Vrátenie na článok <?php echo $nazovClanku ?></a>
             </div>
         </div>
 
-        <form method="post" enctype="application/x-www-form-urlencoded" style="grid-row: 4">
+        <form method="post" enctype="application/x-www-form-urlencoded">
             <div id="pridajPost" class="gridy">
-                <H2 class="header">Pridanie postu do článku: <?php if (isset($nazovCLanku)) {
-                        echo $nazovCLanku;
+                <H2 class="header">Upravenie postu: <?php if (isset($nazovPostu)) {
+                        echo $nazovPostu;
                     } ?></H2>
                 <span style="padding-top: 5px; grid-column: 1" class="bold">Názov postu:</span>
                 <label style="grid-row: 2; grid-column: 2">
-                    <input name="post" type="text" placeholder="Názov postu" required class="vstup" maxlength="60">
+                    <input name="post" type="text" value="<?php echo $nazovPostu ?>" required class="vstup" maxlength="60">
                 </label>
 
                 <span style="padding-top: 5px; grid-column: 1" class="bold">Obsah článku:</span>
@@ -73,13 +78,14 @@ if(isset($_GET['cl'])) {
                     <textarea style="width: 90%; height: 100%;"
                               name="textArea" onKeyDown="limitText(this.form.textArea,this.form.countdown,1000);"
                               onKeyUp="limitText(this.form.textArea,this.form.countdown,1000);">
+                        <?php echo $textPostu ?>
                     </textarea>
                 </label>
                 <div style="grid-row: 4; grid-column: 1/4">
                     <br >(Maximálny počet znakov je: 1000)
                     <span>Máte ešte <input readonly type="text" name="countdown" size="1" value="1000"> voľných znakov.</span><br>
                 </div>
-                <button class="btn-reg-log" style="grid-area: 5/2;">Vytvoriť článok</button>
+                <button class="btn-reg-log" style="grid-area: 5/2;">Upraviť článok</button>
             </div>
         </form>
 

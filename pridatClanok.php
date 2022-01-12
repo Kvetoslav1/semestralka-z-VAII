@@ -55,6 +55,7 @@ if(!isset($_SESSION['Email'])) {
             $pridajClanok = new pridavanieClanku();
             if(isset($pripojenie)) {
                 $pridajClanok->pridajClanok($pripojenie, $_POST['nazovClanku'], $_SESSION['Email'], $vyberanie->getIdKategorie(), $_POST['nadpisClanku']);
+                echo "<script type='text/javascript'>alert('Článok nebol vytvorený!');</script>";
             }
         }
         ?>

@@ -8,6 +8,24 @@ class vyberanieDatabaza
     private string $nazovKategorie = "";
     private string $nazovClanku = "";
     private string $nadpisClanku = "";
+    private string $nadpisPostu = "";
+    private string $emailVytvarajucehoPostu = "";
+
+    /**
+     * @return string
+     */
+    public function getNadpisPostu(): string
+    {
+        return $this->nadpisPostu;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailVytvarajucehoPostu(): string
+    {
+        return $this->emailVytvarajucehoPostu;
+    }
 
     /**
      * @return string
@@ -112,5 +130,39 @@ class vyberanieDatabaza
                 <?php
             }
         }
+    }
+
+    public function dajPocetPostov($pripojenie, $nazovClanku): int {
+        $pocetPostov = 0;
+        $selectPocetPostov = $pripojenie->prepare("select count(nadpis_postu) from posty_v_clankoch where nazov_clanku = ?");
+        $selectPocetPostov->bind_param('s', $nazovClanku);
+        if($selectPocetPostov->execute()) {
+            $selectPocetPostov->store_result();
+            $selectPocetPostov->bind_result($pocetPostov);
+            $selectPocetPostov->fetch();
+        }
+        return $pocetPostov;
+    }
+
+    public function vypisPost($pripojenie, $nazovClanku, $poradie): void {
+        $selectPost = $pripojenie->prepare("select nadpis_postu,email_vytvarajuceho_clanku from posty_v_clankoch where nazov_clanku = ? LIMIT ?,1");
+        $selectPost->bind_param('si', $nazovClanku, $poradie);
+        if($selectPost->execute()) {
+            $selectPost->store_result();
+            $selectPost->bind_result($this->nadpisPostu, $this->emailVytvarajucehoPostu);
+            $selectPost->fetch();
+        }
+    }
+
+    public function dajTextPostu($pripojenie, $nazovPostu): string {
+        $textPostu = "";
+        $selectPost = $pripojenie->prepare("select text from posty_v_clankoch where nadpis_postu = ?");
+        $selectPost->bind_param('s', $nazovPostu);
+        if($selectPost->execute()) {
+            $selectPost->store_result();
+            $selectPost->bind_result($textPostu);
+            $selectPost->fetch();
+        }
+        return $textPostu;
     }
 }
