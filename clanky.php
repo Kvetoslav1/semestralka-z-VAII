@@ -17,6 +17,7 @@ if(isset($_GET['cl'])) {
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="javaScripts/mazanie.js"></script>
 </head>
 
 <body>
@@ -54,13 +55,13 @@ if(isset($_GET['cl'])) {
                         <th><?php echo $nazovClanku ?></th>
                         <th>Príspevky</th>
                     </tr>
-                <?php
-                for ($i = 0; $i < $pocet; $i++) {
-                    $vyberanie->vypisPost($pripojenie, $nazovClanku, $i);
-                    $email = $vyberanie->getEmailVytvarajucehoPostu();
-                    ?>
+                    <?php
+                    for ($i = 0; $i < $pocet; $i++) {
+                        $vyberanie->vypisPost($pripojenie, $nazovClanku, $i);
+                        $email = $vyberanie->getEmailVytvarajucehoPostu();
+                        ?>
                         <tr>
-                            <td>
+                            <td id="<?php echo $vyberanie->getNadpisPostu() ?>">
                                 <div style="display: grid;grid-template-columns: [first] 70% [second] 30%;grid-template-rows: [row1-start] auto [row2-start] auto;">
                                     <div>
                                         <a href="posty.php?cl=<?php echo $vyberanie->getNadpisPostu() ?>">
@@ -75,7 +76,7 @@ if(isset($_GET['cl'])) {
                                                style="font-size: medium;text-align: right" class="fa fa-pencil" aria-hidden="true">Upravenie postu</a>
                                         </div>
                                         <div style="text-align: right">
-                                            <a href="#" onclick="" style="font-size: medium; text-align: right" class="fa fa-times" aria-hidden="true"> Zmazanie postu</a>
+                                            <a onclick="skusobna('<?php echo $vyberanie->getNadpisPostu() ?>','<?php echo $i ?>','posty_v_clankoch')" href="#" style="font-size: medium; text-align: right" class="fa fa-times" aria-hidden="true"> Zmazanie postu</a>
                                         </div>
 
                                         <?php
@@ -86,13 +87,13 @@ if(isset($_GET['cl'])) {
                                     </div>
                                 </div>
                             </td>
-                            <td>0</td>
+                            <td id="<?php echo $i ?>">0</td>
                         </tr>
-                    <?php
-                }
-                ?>
+                        <?php
+                    }
+                    ?>
                 </table>
-            <?php
+                <?php
             }
             ?>
         </div>
