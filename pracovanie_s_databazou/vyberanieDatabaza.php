@@ -145,7 +145,7 @@ class vyberanieDatabaza
     }
 
     public function vypisPost($pripojenie, $nazovClanku, $poradie): void {
-        $selectPost = $pripojenie->prepare("select nadpis_postu,email_vytvarajuceho_clanku from posty_v_clankoch where nazov_clanku = ? LIMIT ?,1");
+        $selectPost = $pripojenie->prepare("select nadpis_postu, email_pouzivatel from posty_v_clankoch where nazov_clanku = ? LIMIT ?,1");
         $selectPost->bind_param('si', $nazovClanku, $poradie);
         if($selectPost->execute()) {
             $selectPost->store_result();
@@ -164,5 +164,50 @@ class vyberanieDatabaza
             $selectPost->fetch();
         }
         return $textPostu;
+    }
+
+    public function dajPocetKomentarovPostu ($pripojenie, $nazovPostu): int {
+        $pocet = 0;
+        $dajPocet = $pripojenie->prepare("select count(cas_odpovede) from odpovede_clanky where nadpis_postu = ?");
+        $dajPocet->bind_param('s', $nazovPostu);
+        if($dajPocet->execute()) {
+            $dajPocet->store_result();
+            $dajPocet->bind_result($pocet);
+            $dajPocet->fetch();
+        }
+        return $pocet;
+    }
+
+    public function isAdmin($pripojenie, $email): bool {
+        $jeAdmin = "";
+        $dajAdmina = $pripojenie->prepare("select typ from pouzivatel where email = ?");
+        $dajAdmina->bind_param('s', $email);
+        if($dajAdmina->execute()) {
+            $dajAdmina->store_result();
+            $dajAdmina->bind_result($jeAdmin);
+            $dajAdmina->fetch();
+            return $jeAdmin == "admin";
+        }
+        return false;
+    }
+
+    public function pridajKategoriu($pripojenie, $nazov): bool {
+        $vybranyNazov = "";
+        if(strlen($nazov) >= 5 && strlen($nazov) <= 40) {
+            $pridajKategoriu = $pripojenie->prepare("select nazov_kategorie from kategorie where nazov_kategorie = ?");
+            $pridajKategoriu->bind_param('s', $nazov);
+            $pridajKategoriu->execute() ;
+            $pridajKategoriu->store_result();
+            $pridajKategoriu->bind_result($vybranyNazov);
+            $pridajKategoriu->fetch();
+            if($pridajKategoriu->num_rows < 1) {
+                $pridajKategoriu = $pripojenie->prepare("INSERT INTO kategorie (nazov_kategorie) VALUES (?)");
+                $pridajKategoriu->bind_param('s', $nazov);
+                if($pridajKategoriu->execute()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

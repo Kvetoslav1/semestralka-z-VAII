@@ -32,8 +32,8 @@ class pridavaniePostu
         $emailVytvarajuci = $this->dajEmailVytvarajuceho($pripojenie, $nazovClanku);
         if($idKat > 0 && $emailVytvarajuci != "") {
             $insertPost = $pripojenie->prepare("INSERT INTO posty_v_clankoch 
-    (nadpis_postu, nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_vytvarajuci, text) VALUES (?,?,?,?,?,?)");
-            $insertPost->bind_param('sssiss',$nadpis, $nazovClanku, $email, $idKat, $emailVytvarajuci, $text);
+    (nadpis_postu, nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel, text) VALUES (?,?,?,?,?,?)");
+            $insertPost->bind_param('sssiss',$nadpis, $nazovClanku, $emailVytvarajuci, $idKat, $email, $text);
             return $insertPost->execute();
         }
         return false;

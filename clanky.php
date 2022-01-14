@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieDatabaza.php";
 session_start();
 $nazovClanku = "";
 if(isset($_GET['cl'])) {
@@ -28,8 +28,7 @@ if(isset($_GET['cl'])) {
 
         <?php require "zakladnaStranka/header.php";  ?>
 
-        <div class="gridy" style="grid-template-columns: [first] 50% [second] 50%; grid-template-rows: [row1-start] 15px; border-radius: 10px;
-            ;grid-gap: 0; margin-top: 0">
+        <div class="vracenie-vytvaranie">
             <div>
                 <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="index.php" ">Vrátenie na hlavnú stránku</a>
             </div>
@@ -76,7 +75,7 @@ if(isset($_GET['cl'])) {
                                                style="font-size: medium;text-align: right" class="fa fa-pencil" aria-hidden="true">Upravenie postu</a>
                                         </div>
                                         <div style="text-align: right">
-                                            <a onclick="skusobna('<?php echo $vyberanie->getNadpisPostu() ?>','<?php echo $i ?>','posty_v_clankoch')" href="#" style="font-size: medium; text-align: right" class="fa fa-times" aria-hidden="true"> Zmazanie postu</a>
+                                            <a onclick="odstranenie('<?php echo $vyberanie->getNadpisPostu() ?>','<?php echo $i ?>')" href="#" style="font-size: medium; text-align: right" class="fa fa-times" aria-hidden="true"> Zmazanie postu</a>
                                         </div>
 
                                         <?php

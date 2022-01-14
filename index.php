@@ -1,9 +1,18 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieDatabaza.php";
 session_start();
 
 $pracovanieDatabaza = new vyberanieDatabaza();
+if(isset($_POST['nazovPostu'], $pripojenie)) {
+    if(!$pracovanieDatabaza->pridajKategoriu($pripojenie, $_POST['nazovPostu'])) {
+        ?>
+        <script>
+            alert("Kategória nebola pridaná!");
+        </script>
+        <?php
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +21,7 @@ $pracovanieDatabaza = new vyberanieDatabaza();
     <title>Title</title>
     <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
     <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -25,10 +35,21 @@ $pracovanieDatabaza = new vyberanieDatabaza();
         <?php require "zakladnaStranka/header.php"; ?>
 
         <?php
-            if(isset($_SESSION['Email'])) {
+            if(isset($_SESSION['Email']) && isset($pripojenie)) {
                 ?>
-                    <div style="background-color: #b7c7c9; text-align: end;border-radius: 5px;">
-                        <a href="pridatClanok.php" class="fa fa-pencil" aria-hidden="true">Vytvoriť článok</a>
+                    <div class="vracenie-vytvaranie">
+                        <?php
+                        if($pracovanieDatabaza->isAdmin($pripojenie, $_SESSION['Email'])) {
+                            ?>
+                            <form method="post" enctype="application/x-www-form-urlencoded" style="align-self: start">
+                                <span class="bold">Názov kategórie:</span>
+                                <input name="nazovPostu" type="text" maxlength="40">
+                                <button type="submit" class="btn-reg-log">Vytvoriť</button>
+                            </form>
+                            <?php
+                        }
+                        ?>
+                        <a href="pridatClanok.php" class="fa fa-pencil" aria-hidden="true" style="grid-column: 2">Vytvoriť článok</a>
                     </div>
                 <?php
             }

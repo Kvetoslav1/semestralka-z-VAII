@@ -1,7 +1,7 @@
 <?php
 require "pripojenie.php";
 require "pracovanie_s_databazou/clanky_posty/pridavaniePostu.php";
-require "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieDatabaza.php";
 
 session_start();
 if(!isset($_SESSION['Email'])) {

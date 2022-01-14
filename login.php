@@ -27,6 +27,10 @@ $prihlasovanie = new prihlasovanie();
 
         <?php require "zakladnaStranka/header.php"; ?>
 
+        <div class="vracenie-vytvaranie">
+            <a class="fa fa-level-down" style="margin-left: 5px;" onclick="history.back()" href="#">Vrátenie späť</a>
+        </div>
+
         <div>
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div id="sing-up" class="gridy">

@@ -29,6 +29,10 @@
 
             <?php require "zakladnaStranka/header.php"; ?>
 
+            <div class="vracenie-vytvaranie">
+                <a class="fa fa-level-down" style="margin-left: 5px;" onclick="history.back()" href="#">Vrátenie späť</a>
+            </div>
+
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div id="register" class="gridy">
                     <h2 class="header" style="grid-column: 1/4;">Registrácia</h2>
@@ -54,7 +58,7 @@
                            required class="vstup" style="grid-row: 7;">
 
                     <?php
-                    if(isset($_POST['UserName'])){
+                    if(isset($_POST['UserName'],$registracia)){
                         if(!$registracia->porovnanieHesiel()) {
                             ?>
                             <p class="all-check" style="grid-row: 7;grid-column: 2/4;">Heslá nie sú zhodné.</p>

@@ -26,7 +26,7 @@ odsadenie pre veci nachádzajúce sa v stránke
     grid-column: 2/3;
     grid-row: 2/3;
     display: grid;
-    grid-template-rows: [row1-start] 20% [row2-start] 30px [row3-start] 20px [row4-start] auto [row5-start] 50px;
+    grid-template-rows: [row1-start] 20% [row2-start] 30px [row3-start] 25px [row4-start] auto [row5-start] 50px;
     grid-gap: 10px;
 }
 

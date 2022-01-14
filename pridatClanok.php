@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-include "pracovanie_s_databazou/clanky_posty/vyberanieDatabaza.php";
+include "pracovanie_s_databazou/vyberanieDatabaza.php";
 include "pracovanie_s_databazou/clanky_posty/pridavanieClanku.php";
 
 session_start();
