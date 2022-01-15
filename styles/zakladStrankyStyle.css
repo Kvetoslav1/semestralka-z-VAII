@@ -69,6 +69,27 @@ tlačítka na začiatku stránky
     text-align: right;
 }
 
+.post-area {
+    margin-left: 2%;
+    resize: none;
+    width: 99%;
+    height: 300px;
+    background-color: #b7c7c9;
+    border: 2px #354E59 solid;
+    color: black
+}
+
+#aktivneCislo {
+    color: darkblue;
+}
+
+#odpovedTextArea {
+    resize: none;
+    margin-left: 1%;
+    width: 97%;
+    height: 55px;
+}
+
 @media(max-width: 970px) {
     .btn-group > :nth-child(2){
         margin-right: unset;

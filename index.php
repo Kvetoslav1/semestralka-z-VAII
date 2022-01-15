@@ -1,9 +1,9 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
 session_start();
 
-$pracovanieDatabaza = new vyberanieDatabaza();
+$pracovanieDatabaza = new vyberanieVkladanieDatabaza();
 if(isset($_POST['nazovPostu'], $pripojenie)) {
     if(!$pracovanieDatabaza->pridajKategoriu($pripojenie, $_POST['nazovPostu'])) {
         ?>
@@ -19,8 +19,8 @@ if(isset($_POST['nazovPostu'], $pripojenie)) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
-    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <link href="styles/zakladStrankyStyle.css" rel="stylesheet" type="text/css">
+    <link href="styles/tableStyles.css" rel="stylesheet" type="text/css">
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">

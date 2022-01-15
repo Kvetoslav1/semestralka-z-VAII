@@ -58,6 +58,12 @@ div#pridajPost {
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start]  350px [row4-start] 50px [row5-start] 30px;
 }
 
+div#gridPosty {
+    grid-template-columns: [first] 96%;
+    grid-template-rows: [row1-start] 50px [row2-start] 300px [row3-start] 30px [row4-start] 600px [row5-start] 20px
+    [row6-start] 135px;
+}
+
 .vracenie-vytvaranie {
     display: grid;
     grid-template-columns: [first] auto [second] auto;

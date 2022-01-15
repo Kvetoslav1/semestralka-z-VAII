@@ -1,7 +1,7 @@
 <?php
 require "pripojenie.php";
 require "pracovanie_s_databazou/clanky_posty/pridavaniePostu.php";
-require "pracovanie_s_databazou/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
 
 session_start();
 if(!isset($_SESSION['Email'])) {
@@ -11,7 +11,7 @@ $nazovClanku = "";
 $nazovPostu = "";
 $textPostu = "";
 if(isset($_GET['cl'], $_GET['np']) && isset($pripojenie)) {
-    $vyberanie = new vyberanieDatabaza();
+    $vyberanie = new vyberanieVkladanieDatabaza();
     $nazovClanku = $_GET['cl'];
     $nazovPostu = $_GET['np'];
     $textPostu = $vyberanie->dajTextPostu($pripojenie, $nazovPostu);
@@ -32,7 +32,7 @@ if(isset($_GET['cl'], $_GET['np']) && isset($pripojenie)) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
+    <link href="styles/zakladStrankyStyle.css" rel="stylesheet" type="text/css">
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">

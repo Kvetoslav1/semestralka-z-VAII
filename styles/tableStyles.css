@@ -45,3 +45,23 @@ td:nth-child(n+1){
     font-weight: 900;
 }
 
+table:nth-child(1).odpovede {
+    margin-top: 20px;
+}
+
+table.odpovede tr:nth-child(-n+2){
+    font-size: 18px;
+    width: 75%;
+    background-color: #465257;
+    color: #EEEAE4;
+}
+
+.textAreaOdpovede {
+    resize: none;
+    width: 99%;
+    height: 55px;
+    background-color: #b7c7c9;
+    border: none;
+    color: black
+}
+

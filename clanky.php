@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-require "pracovanie_s_databazou/vyberanieDatabaza.php";
+require "pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
 session_start();
 $nazovClanku = "";
 if(isset($_GET['cl'])) {
@@ -12,12 +12,12 @@ if(isset($_GET['cl'])) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
-    <link href="styles/style.css" rel="stylesheet" type="text/css">
+    <link href="styles/zakladStrankyStyle.css" rel="stylesheet" type="text/css">
+    <link href="styles/tableStyles.css" rel="stylesheet" type="text/css">
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="javaScripts/mazanie.js"></script>
+    <script src="javaScripts/mazanieClanku.js"></script>
 </head>
 
 <body>
@@ -45,7 +45,7 @@ if(isset($_GET['cl'])) {
         <div>
             <?php
             if(isset($pripojenie)) {
-                $vyberanie = new vyberanieDatabaza();
+                $vyberanie = new vyberanieVkladanieDatabaza();
                 $pocet = $vyberanie->dajPocetPostov($pripojenie, $nazovClanku);
                 $email = "";
                 ?>
@@ -63,7 +63,7 @@ if(isset($_GET['cl'])) {
                             <td id="<?php echo $vyberanie->getNadpisPostu() ?>">
                                 <div style="display: grid;grid-template-columns: [first] 70% [second] 30%;grid-template-rows: [row1-start] auto [row2-start] auto;">
                                     <div>
-                                        <a href="posty.php?cl=<?php echo $vyberanie->getNadpisPostu() ?>">
+                                        <a href="posty.php?post=<?php echo $vyberanie->getNadpisPostu() ?>&cl=<?php echo $nazovClanku ?>">
                                             <?php echo $vyberanie->getNadpisPostu() ?></a>
                                     </div>
 

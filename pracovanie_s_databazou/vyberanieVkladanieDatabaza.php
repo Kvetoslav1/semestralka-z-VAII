@@ -1,6 +1,6 @@
 <?php
 
-class vyberanieDatabaza
+class vyberanieVkladanieDatabaza
 {
     private int $pocetKategorii = 0;
     private int $idKategorie = 0;
@@ -209,5 +209,9 @@ class vyberanieDatabaza
             }
         }
         return false;
+    }
+
+    public function pridajOdpoved($pripojenie, $text, $post): bool {
+
     }
 }

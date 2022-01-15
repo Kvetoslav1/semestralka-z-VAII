@@ -1,6 +1,6 @@
 <?php
 require "pripojenie.php";
-include "pracovanie_s_databazou/vyberanieDatabaza.php";
+include "pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
 include "pracovanie_s_databazou/clanky_posty/pridavanieClanku.php";
 
 session_start();
@@ -13,7 +13,7 @@ if(!isset($_SESSION['Email'])) {
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
+    <link href="styles/zakladStrankyStyle.css" rel="stylesheet" type="text/css">
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -35,7 +35,7 @@ if(!isset($_SESSION['Email'])) {
                 <span style="grid-row: 3" class="bold">Výber kategórie:</span>
                 <select class="vstup" name="kategoriaClanku">
                     <?php
-                    $vyberanie = new vyberanieDatabaza();
+                    $vyberanie = new vyberanieVkladanieDatabaza();
                     if(isset($pripojenie)) {
                         $vyberanie->dajKategorie($pripojenie);
                     }

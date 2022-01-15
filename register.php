@@ -15,7 +15,7 @@
     <head>
         <meta charset="UTF-8">
         <title>Title</title>
-        <link href="styles/zaklad.css" rel="stylesheet" type="text/css">
+        <link href="styles/zakladStrankyStyle.css" rel="stylesheet" type="text/css">
         <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
