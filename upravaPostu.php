@@ -24,7 +24,7 @@ if(isset($_GET['cl'], $_GET['np']) && isset($pripojenie)) {
         }
     }
 } else {
-    header("Location: index.php");
+    header("Location:  clanky.php?cl=".$nazovClanku);
 }
 ?>
 <!DOCTYPE html>

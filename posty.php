@@ -71,7 +71,7 @@ if(isset($_POST['odpoved'], $pripojenie)) {
             <div style="grid-row: 6; grid-column: 1/4">
                 <h2 class="header">Pridať odpoveď</h2>
                 <form method="post" enctype="application/x-www-form-urlencoded">
-                    <textarea id="odpovedTextArea" name="odpoved" maxlength="500"></textarea>
+                    <textarea id="odpovedTextArea" name="odpoved" minlength="20" maxlength="500"></textarea>
                     <input style="margin-left: 45%" type="submit" class="btn-reg-log">
                 </form>
             </div>

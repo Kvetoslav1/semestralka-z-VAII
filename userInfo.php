@@ -6,10 +6,8 @@ if(!isset($_SESSION['Email'])) {
     header("Location: login.php");
 }
 $uprava = new upravaUdajov();
- if(isset($_POST['zmazanie']) && isset($pripojenie)) {
-     $uprava->odstranUcet($pripojenie, $_SESSION['Email']);
- }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +17,9 @@ $uprava = new upravaUdajov();
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" charset="utf8" src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script src="javaScripts/odstranenieUctu.js"></script>
 </head>
 
 <body>
@@ -81,15 +82,13 @@ $uprava = new upravaUdajov();
             </form>
 
 
-            <form method="post" enctype="application/x-www-form-urlencoded">
-                <div class="gridy" id="odstranenie-uctu" style="grid-row: 3">
-                    <h2 class="header" style="grid-column: 1/4;">Zmazanie účtu.</h2>
-                    <span class="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
+            <div class="gridy" id="odstranenie-uctu" style="grid-row: 3">
+                <h2 class="header" style="grid-column: 1/4;">Zmazanie účtu.</h2>
+                <span class="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
                         Ak naozaj chcete zmazať svoj účet tak sa spolu s ním zmažú aj všetky články, ktoré ste vytvorili
                     a aj odpovede, ktoré ste napísali. Ak si naozaj prajete zmazať účet kliknite na tlačidlo ZMAZAŤ ÚČET.</span>
-                    <button name="zmazanie" type="submit" style="grid-column: 2/3; max-width: 130px" class="btn-reg-log" onclick="potvrdenieOdstranenia()">Zmazanie účtu</button>
-                </div>
-            </form>
+                <button style="grid-column: 2/3;" class="btn-reg-log" onclick="potvrdenieOdstranenia('<?php echo $_SESSION['Email'] ?>')">Zmazanie účtu</button>
+            </div>
         </div>
 
 

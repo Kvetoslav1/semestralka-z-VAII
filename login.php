@@ -17,6 +17,8 @@ $prihlasovanie = new prihlasovanie();
     <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="javaScripts/registerKontrola.js"></script>
 </head>
 
 <body>
@@ -42,7 +44,7 @@ $prihlasovanie = new prihlasovanie();
                         } else {
                             $hlaska = $prihlasovanie->getHlaska();
                             ?>
-                            <p class="all-check" style="grid-row: 2/4;grid-column: 2/4;"><?php echo $hlaska ?></p>
+                            <p class="all-check" style="grid-row: 2/4;grid-column: 3/4;"><?php echo $hlaska ?></p>
                             <?php
                         }
                     }
@@ -50,14 +52,20 @@ $prihlasovanie = new prihlasovanie();
                     <H2 class="header">Prihlásiť sa</H2>
 
                     <span style="padding-top: 5px" class="bold">Užívateľské meno:</span>
-                    <input name="UserName" type="text" placeholder="Login" required class="vstup" style="grid-row: 2;">
+                    <input name="UserName" type="text" placeholder="Login" required class="vstup" style="grid-row: 2;"
+                    onkeydown="kontrolaVstupov(this.form.UserName, 30, 'email')"
+                    onkeyup="kontrolaVstupov(this.form.UserName, 30, 'email')">
 
                     <span class="bold">Heslo:</span>
-                    <input name="password" type="password" placeholder="Password" required class="vstup" style="grid-row: 3;">
+                    <input name="password" type="password" placeholder="Password" required class="vstup" style="grid-row: 3;"
+                    onkeydown="kontrolaVstupov(this.form.password, 75, 'heslo')"
+                    onkeyup="kontrolaVstupov(this.form.password, 75, 'heslo')">
 
+                    <p id="email" class="all-check" style="visibility: hidden; grid-row: 2; grid-column: 3">Meno musí obsahovať @!</p>
+                    <p id="heslo" class="all-check" style="visibility: hidden; grid-row: 3; grid-column: 3">Heslo musí mať minimálne 8 znakov z písmen a čísel!</p>
 <!--                    <span style="grid-area: 4 / 2;align-self: center"><a href="url" class="bold">-->
 <!--                    Zabudnuté heslo</a></span>-->
-                    <button class="btn-reg-log" style="grid-area: 4/2;">Prihlásiť sa</button>
+                    <button class="btn-reg-log" style="grid-area: 4/2;" id="submitRegistracie">Prihlásiť sa</button>
 
                 </div>
             </form>

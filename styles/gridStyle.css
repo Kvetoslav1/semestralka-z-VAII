@@ -8,7 +8,7 @@
 }
 
 div#sing-up {
-    grid-template-columns: [first] 25%[second] auto [third] 2%;
+    grid-template-columns: [first] 25%[second] 170px [third] auto;
     grid-template-rows: [row1-start] 50px [row2-start] 30px [row3-start] 30px [row4-start] 30px;
 }
 
@@ -44,7 +44,7 @@ div#userInfo {
 }
 
 div#odstranenie-uctu {
-    grid-template-columns: [first] 35% [second] auto;
+    grid-template-columns: [first] 35% [second] 140px;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px;
 }
 
@@ -96,7 +96,7 @@ span#resolution-change {
 .btn-reg-log {
     cursor: pointer;
     font-weight: bold;
-    max-width: 120px;
+    max-width: 130px;
 }
 
 .btn-reg-log:hover {

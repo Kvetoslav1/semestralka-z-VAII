@@ -1,6 +1,7 @@
     <?php
     require "pracovanie_s_databazou/praca_s_pouzivatelom/registracia.php";
     require "pripojenie.php";
+
     session_start();
     if(isset($_SESSION['Email'])) {
         header("Location: index.php");
@@ -36,6 +37,7 @@
             </div>
 
             <form method="post" enctype="application/x-www-form-urlencoded">
+
                 <div id="register" class="gridy">
                     <h2 class="header" style="grid-column: 1/4;">Registrácia</h2>
                     <span id="resolution-change">
@@ -75,26 +77,25 @@
                     <?php
                     if(isset($_POST['UserName'],$registracia)){
                         if(isset($pripojenie)) {
-                            if($registracia->zistiPouzivatelov($pripojenie, "meno", $registracia->getMeno()) != 0) { ?>
-                                <p class="all-check" style="grid-row: 5; grid-column: 2/4">Zadaný email sa už používa.</p>
+                            if($registracia->zistiPouzivatelov($pripojenie, "email", $registracia->getEmail()) != 0) { ?>
+                                <p class="all-check" style="grid-row: 5; grid-column: 3">Zadaný email sa už používa.</p>
                                 <?php
                             }
-                            if($registracia->zistiPouzivatelov($pripojenie, "email", $registracia->getEmail()) != 0) { ?>
-                                <p class="all-check" style="grid-row: 3; grid-column: 2/4">Používateľské meno je už zabraté.</p>
+                            if($registracia->zistiPouzivatelov($pripojenie, "meno", $registracia->getMeno()) != 0) { ?>
+                                <p class="all-check" style="grid-row: 3; grid-column: 3">Používateľské meno je už zabraté.</p>
                                 <?php
                             } else {
-                                if(strlen($registracia->getMeno()) >= 3 && strlen($registracia->getMeno()) <= 20 && strlen($registracia->getEmail()) != 0
-                                    && strlen($registracia->getHeslo()) >= 8
-                                    && $registracia->porovnanieHesiel() && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)) {
-                                    $registracia->setHeslo(password_hash($registracia->getHeslo(), PASSWORD_BCRYPT));
-                                    $sprava = $registracia->pridajPouzivatela($pripojenie);
-                                    if($sprava == "Účet bol vytvorený.") {
-                                        session_start();
-                                        $_SESSION['Email'] = $_POST['Email'];
-                                        header("Location: index.php");
-                                    } else {
-                                        echo "<script type='text/javascript'>alert('$sprava');</script>";
-                                    }
+                            }
+                            if(strlen($registracia->getMeno()) >= 3 && strlen($registracia->getMeno()) <= 20 && strlen($registracia->getEmail()) != 0
+                                && strlen($registracia->getHeslo()) >= 8
+                                && $registracia->porovnanieHesiel() && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)) {
+                                $registracia->setHeslo(password_hash($registracia->getHeslo(), PASSWORD_BCRYPT));
+                                //$sprava = $registracia->pridajPouzivatela($pripojenie);
+                                if($registracia->pridajPouzivatela($pripojenie)) {
+                                    $registracia->clear();
+                                    echo "<script>alert('Účet bol vytvorený. Môžete sa prihlásiť.')</script>";
+                                } else {
+                                    echo "<script type='text/javascript'>alert('Účet nebol vytvorený.');</script>";
                                 }
                             }
                         }
