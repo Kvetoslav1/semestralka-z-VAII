@@ -297,20 +297,22 @@ class vyberanieVkladanieDatabaza
      * @return bool
      */
     public function pridajOdpoved($pripojenie, $text, $post, $emailOdpoved): bool {
-        $nazov_cl = "";
-        $emailVytvarajuceho = "";
-        $idKat = "";
-        $emailPouzivatel = "";
-        $select = $pripojenie->prepare("select  nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel from posty_v_clankoch where nadpis_postu = ?");
-        $select->bind_param('s', $post);
-        if($select->execute()) {
-            $select->store_result();
-            $select->bind_result($nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel);
-            $select->fetch();
-            $select = $pripojenie->prepare("insert into odpovede_clanky (cas_odpovede, text_odpoved, nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel, nadpis_postu, email)
+        if(strlen($text) >= 20 && strlen($text) <= 500) {
+            $nazov_cl = "";
+            $emailVytvarajuceho = "";
+            $idKat = "";
+            $emailPouzivatel = "";
+            $select = $pripojenie->prepare("select  nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel from posty_v_clankoch where nadpis_postu = ?");
+            $select->bind_param('s', $post);
+            if($select->execute()) {
+                $select->store_result();
+                $select->bind_result($nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel);
+                $select->fetch();
+                $select = $pripojenie->prepare("insert into odpovede_clanky (cas_odpovede, text_odpoved, nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel, nadpis_postu, email)
             VALUES (CURRENT_TIME, ?, ?, ?, ?, ?, ?, ?)");
-            $select->bind_param('sssisss', $text, $nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel, $post, $emailOdpoved);
-            return $select->execute();
+                $select->bind_param('sssisss', $text, $nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel, $post, $emailOdpoved);
+                return $select->execute();
+            }
         }
         return false;
     }
