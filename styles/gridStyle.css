@@ -64,6 +64,11 @@ div#gridPosty {
     [row6-start] 160px;
 }
 
+div#informacie {
+    grid-template-columns: [first] 30% [second] auto;
+    grid-template-rows: [row1-start] 50px [row2-start] auto;
+}
+
 .vracenie-vytvaranie {
     display: grid;
     grid-template-columns: [first] auto [second] auto;
