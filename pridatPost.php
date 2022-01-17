@@ -70,8 +70,7 @@ if(isset($_GET['cl'])) {
                 <span style="padding-top: 5px; grid-column: 1" class="bold">Obsah článku:</span>
                 <label style="grid-row: 3; grid-column: 2/4">
                     <textarea name="textArea" onKeyDown="limitText(this.form.textArea,this.form.countdown,1000);"
-                    onKeyUp="limitText(this.form.textArea,this.form.countdown,1000);" style="width: 90%; height: 100%; resize: none" minlength="50" maxlength="1000">
-                    </textarea>
+                    onKeyUp="limitText(this.form.textArea,this.form.countdown,1000);" style="width: 90%; height: 100%; resize: none" minlength="50" maxlength="1000"></textarea>
                 </label>
                 <div style="grid-row: 4; grid-column: 1/4">
                     <br >(Maximálny počet znakov je: 1000)
