@@ -11,6 +11,8 @@ class vyberanieVkladanieDatabaza
     private string $nadpisPostu = "";
     private string $emailVytvarajucehoPostu = "";
 
+
+
     /**
      * @return string
      */
@@ -196,7 +198,7 @@ class vyberanieVkladanieDatabaza
         if(strlen($nazov) >= 5 && strlen($nazov) <= 40) {
             $pridajKategoriu = $pripojenie->prepare("select nazov_kategorie from kategorie where nazov_kategorie = ?");
             $pridajKategoriu->bind_param('s', $nazov);
-            $pridajKategoriu->execute() ;
+            $pridajKategoriu->execute();
             $pridajKategoriu->store_result();
             $pridajKategoriu->bind_result($vybranyNazov);
             $pridajKategoriu->fetch();
@@ -211,7 +213,58 @@ class vyberanieVkladanieDatabaza
         return false;
     }
 
-    public function pridajOdpoved($pripojenie, $text, $post): bool {
+    public function pridajOdpoved($pripojenie, $text, $post, $emailOdpoved): bool {
+        $nazov_cl = "";
+        $emailVytvarajuceho = "";
+        $idKat = "";
+        $emailPouzivatel = "";
+        $select = $pripojenie->prepare("select  nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel from posty_v_clankoch where nadpis_postu = ?");
+        $select->bind_param('s', $post);
+        if($select->execute()) {
+            $select->store_result();
+            $select->bind_result($nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel);
+            $select->fetch();
+            $select = $pripojenie->prepare("insert into odpovede_clanky (cas_odpovede, text_odpoved, nazov_clanku, email_vytvarajuceho_clanku, id_kategorie, email_pouzivatel, nadpis_postu, email)
+            VALUES (CURRENT_TIME, ?, ?, ?, ?, ?, ?, ?)");
+            $select->bind_param('sssisss', $text, $nazov_cl, $emailVytvarajuceho, $idKat, $emailPouzivatel, $post, $emailOdpoved);
+            return $select->execute();
+        }
+        return false;
+    }
 
+    public function dajPocetPostovClanku($pripojenie): int {
+        $pocet = 0;
+        $dajPocet = $pripojenie->prepare("select count(nadpis_postu) from posty_v_clankoch where nazov_clanku = ?");
+        $dajPocet->bind_param('s', $this->nazovClanku);
+        if($dajPocet->execute()) {
+            $dajPocet->store_result();
+            $dajPocet->bind_result($pocet);
+            $dajPocet->fetch();
+        }
+        return $pocet;
+    }
+
+    public function dajPocetOdpovediClanku($pripojenie): int {
+        $pocet = 0;
+        $dajPocetOdpovedi = $pripojenie->prepare("select count(cas_odpovede) from odpovede_clanky where nazov_clanku = ?");
+        $dajPocetOdpovedi->bind_param('s', $this->nazovClanku);
+        if($dajPocetOdpovedi->execute()) {
+            $dajPocetOdpovedi->store_result();
+            $dajPocetOdpovedi->bind_result($pocet);
+            $dajPocetOdpovedi->fetch();
+        }
+        return $pocet;
+    }
+
+    public function dajPocetOdpovediPostu($pripojenie): int {
+        $pocet = 0;
+        $dajPocetOdpovedi = $pripojenie->prepare("select count(cas_odpovede) from odpovede_clanky where nadpis_postu = ?");
+        $dajPocetOdpovedi->bind_param('s', $this->nadpisPostu);
+        if($dajPocetOdpovedi->execute()) {
+            $dajPocetOdpovedi->store_result();
+            $dajPocetOdpovedi->bind_result($pocet);
+            $dajPocetOdpovedi->fetch();
+        }
+        return $pocet;
     }
 }

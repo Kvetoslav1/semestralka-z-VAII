@@ -64,7 +64,7 @@ $uprava = new upravaUdajov();
                     }
                     ?>
                     <h2 class="header" style="grid-column: 1/4;">Údaje aktuálne prihláseného používateľa.</h2>
-                    <span id="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
+                    <span class="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
                         Ak chcete zmeniť vaše aktuálne údaje, tak napíšte nové údaje to textových polí a potvrdte zmeny
                     stlačením tlačidla na potvrdenie zmien.</span>
                     <span style="grid-row: 3;" class="bold">Používateľove meno:</span>
@@ -84,7 +84,7 @@ $uprava = new upravaUdajov();
             <form method="post" enctype="application/x-www-form-urlencoded">
                 <div class="gridy" id="odstranenie-uctu" style="grid-row: 3">
                     <h2 class="header" style="grid-column: 1/4;">Zmazanie účtu.</h2>
-                    <span id="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
+                    <span class="resolution-change" style="grid-column: 1/4; grid-row: 2/3">
                         Ak naozaj chcete zmazať svoj účet tak sa spolu s ním zmažú aj všetky články, ktoré ste vytvorili
                     a aj odpovede, ktoré ste napísali. Ak si naozaj prajete zmazať účet kliknite na tlačidlo ZMAZAŤ ÚČET.</span>
                     <button name="zmazanie" type="submit" style="grid-column: 2/3; max-width: 130px" class="btn-reg-log" onclick="potvrdenieOdstranenia()">Zmazanie účtu</button>

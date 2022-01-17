@@ -1,15 +1,24 @@
 <?php
 require "../../pripojenie.php";
+require "../../pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
 
 session_start();
-$stranka = $_REQUEST['str'];
-$nazov = $_REQUEST['post'];
+$stranka = $_GET['stranka'];
+$nazov =  $_GET['nazov'];
+
 $user = $_SESSION['Email'];
 
+$dajPocetOdpovedi = new vyberanieVkladanieDatabaza();
+
 if(isset($pripojenie) && $stranka >= 1) {
+    $pocet = $dajPocetOdpovedi->dajPocetKomentarovPostu($pripojenie, $nazov);
     $selectKomentare = $pripojenie->prepare("select email, text_odpoved, cas_odpovede from odpovede_clanky where nadpis_postu = ? order by cas_odpovede DESC limit ?,1");
-    $stranka *= 4;
-    for ($i = $stranka - 4; $i < $stranka; $i++) {
+    $poradie = $stranka *4;
+    if($stranka * 4 == $pocet + 4) {
+        $stranka -= 1;
+        $poradie -= 4;
+    }
+    for ($i = $poradie - 4; $i < $poradie; $i++) {
         $email = "";
         $text_odpoved = "";
         $cas_odpovede = "";
@@ -36,7 +45,9 @@ if(isset($pripojenie) && $stranka >= 1) {
 
             if($user == $email) {
                 echo "<tr>";
-                echo "<td><a onclick='' href='#'>Zmazanie</a></td>";
+                echo "<td>";
+                    echo '<a onclick="zmazanieKomentaru(\'' . $cas_odpovede . '\',\'' . $_GET['stranka'] . '\',\'' . $nazov . '\')" href="#" >Zmazanie</a>';
+                echo "</td>";
                 echo "</tr>";
             }
             echo "</table>";

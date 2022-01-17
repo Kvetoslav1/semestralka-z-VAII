@@ -2,7 +2,11 @@ body {
     display: grid;
     background-color: #354E59;
     grid-template-columns: [first] 20%[second] 60% [third] 20% ;
-    grid-template-rows: [row1-start] 1% [row2-start] 120vh [row3-start] 1%;
+    grid-template-rows: [row1-start] 1% [row2-start] 130vh [row3-start] 1%;
+}
+
+#postyBody {
+    grid-template-rows: [row1-start] 1% [row2-start] auto [row3-start] 1%;
 }
 
 /*
@@ -26,7 +30,8 @@ odsadenie pre veci nachádzajúce sa v stránke
     grid-column: 2/3;
     grid-row: 2/3;
     display: grid;
-    grid-template-rows: [row1-start] 20% [row2-start] 30px [row3-start] 25px [row4-start] auto [row5-start] 50px;
+    grid-template-rows: [row1-start] 200px [row2-start] fit-content(120px) [row3-start] fit-content(40px)
+    [row4-start] auto [row5-start] 80px;
     grid-gap: 10px;
 }
 
@@ -70,7 +75,6 @@ tlačítka na začiatku stránky
 }
 
 .post-area {
-    margin-left: 2%;
     resize: none;
     width: 99%;
     height: 300px;
@@ -80,12 +84,12 @@ tlačítka na začiatku stránky
 }
 
 #aktivneCislo {
-    color: darkblue;
+    color: mediumblue;
 }
 
 #odpovedTextArea {
     resize: none;
-    margin-left: 1%;
+    margin-left: 0.5%;
     width: 97%;
     height: 55px;
 }
@@ -99,40 +103,57 @@ tlačítka na začiatku stránky
     }
     body {
         grid-template-columns: [first] 5%[second] 90% [third] 5%;
-        grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
+        grid-template-rows: [row1-start] 1% [row2-start] 140vh [row3-start] 1%;
+    }
+    #postyBody {
+        grid-template-rows: [row1-start] 1% [row2-start] 210vh [row3-start] 1%;
     }
     .odsadenie {
-        grid-template-rows: [row1-start] 20% [row2-start] 100px [row3-start] auto [row4-start] 50px;
-        grid-gap: 15px;
+        grid-template-rows: [row1-start] 200px [row2-start] fit-content(120px) [row3-start] fit-content(40px)
+    [row4-start] auto [row5-start] 80px;
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 615px) {
+    body {
+        grid-template-columns: [first] 1%[second] 98% [third] 1%;
+        grid-template-rows: [row1-start] 1% [row2-start] 150vh [row3-start] 1%;
+    }
+}
+
+@media (max-width: 555px) {
     body {
         grid-template-columns: [first] 1%[second] 98% [third] 1%;
         grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
     }
+    .telo {
+        grid-template-columns: [first] 1% [second] 98% [third]  1%;
+    }
 }
 
-@media (max-height: 610px) {
+@media (max-width: 474px) {
+    #postyBody {
+        grid-template-rows: [row1-start] 1% [row2-start] 220vh [row3-start] 1%;
+    }
+}
+
+@media (max-width: 460px) {
+    body {
+        grid-template-columns: [first] 1%[second] 98% [third] 1%;
+        grid-template-rows: [row1-start] 1% [row2-start] 170vh [row3-start] 1%;
+    }
+}
+
+@media (max-width: 446px) {
+    @media (max-width: 446px) {
+        #postyBody {
+            grid-template-rows: [row1-start] 1% [row2-start] 230vh [row3-start] 1%;
+        }
+    }
+}
+
+@media (max-height: 700px) {
     body {
         grid-template-rows: [row1-start] 1% [row2-start] 180vh [row3-start] 1%;
-    }
-}
-
-@media (max-height: 720px) {
-    /*.btn-group > :nth-child(2){
-        margin-right: unset;
-    }
-    .btn-group {
-        flex-direction: column;
-    }*/
-    body {
-        grid-template-columns: [first] 5%[second] 90% [third] 5%;
-        grid-template-rows: [row1-start] 1% [row2-start] 160vh [row3-start] 1%;
-    }
-    .odsadenie {
-        grid-template-rows: [row1-start] 20% [row2-start] 100px [row3-start] auto [row4-start] 50px;
-        grid-gap: 15px;
     }
 }

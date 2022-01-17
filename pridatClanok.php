@@ -27,6 +27,10 @@ if(!isset($_SESSION['Email'])) {
 
         <?php require "zakladnaStranka/header.php"; ?>
 
+        <div class="vracenie-vytvaranie">
+            <a class="fa fa-level-down" style="margin-left: 5px;" onclick="history.back()" href="#">Vrátenie späť</a>
+        </div>
+
         <form method="post" enctype="application/x-www-form-urlencoded">
             <div id="clanokCreate" class="gridy">
                 <h2 class="header" style="grid-column: 1/4;">Vytváranie článku</h2>

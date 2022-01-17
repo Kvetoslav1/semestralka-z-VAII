@@ -9,7 +9,7 @@
 
 div#sing-up {
     grid-template-columns: [first] 25%[second] auto [third] 2%;
-    grid-template-rows: [row1-start] 50px [row2-start] 30px [row3-start] 30px [row4-start] 30px [row5-start] 30px;
+    grid-template-rows: [row1-start] 50px [row2-start] 30px [row3-start] 30px [row4-start] 30px;
 }
 
 .header {
@@ -32,36 +32,36 @@ div#create-acc {
 }
 
 div#register {
-    grid-template-columns: [first] 25%[second] 40% [third] auto;
+    grid-template-columns: [first] 25%[second] 165px [third] auto;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px [row4-start] auto [row5-start] 30px
         [row6-start] 30px [row7-start] 30px [row8-start] 30px [row9-start] 30px;
 }
 
 div#userInfo {
-    grid-template-columns: [first] 35%[second] 25%[third] auto;
+    grid-template-columns: [first] 35%[second] auto;
     grid-template-rows: [row1-start] 50px [row2-start] 15% [row3-start] 30px [row4-start] auto [row5-start] 30px
         [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 20px;
 }
 
 div#odstranenie-uctu {
-    grid-template-columns: [first] 35% [second] auto [third] 35%;
+    grid-template-columns: [first] 35% [second] auto;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px;
 }
 
 div#clanokCreate {
-    grid-template-columns: [first] 35% [second] auto [third] 25%;
+    grid-template-columns: [first] auto [second] auto;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 30px [row4-start] 30px [row5-start] 30px [row6-start] 30px;
 }
 
 div#pridajPost {
-    grid-template-columns: [first] 20% [second] auto [third] 25%;
+    grid-template-columns: [first] 20% [second] auto;
     grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start]  350px [row4-start] 50px [row5-start] 30px;
 }
 
 div#gridPosty {
-    grid-template-columns: [first] 96%;
-    grid-template-rows: [row1-start] 50px [row2-start] 300px [row3-start] 30px [row4-start] 600px [row5-start] 20px
-    [row6-start] 135px;
+    grid-template-columns:[first] 1% [second] auto [third] 1%;
+    grid-template-rows: [row1-start] 50px [row2-start] 300px [row3-start] 30px [row4-start] fit-content(750px) [row5-start] 20px
+    [row6-start] 160px;
 }
 
 .vracenie-vytvaranie {
@@ -77,7 +77,6 @@ div#gridPosty {
 .all-check {
     color: red;
     align-self: center;
-    padding-left: 180px;
 }
 
 span#resolution-change {
@@ -135,41 +134,15 @@ a:hover{
     font-weight: bold;
 }
 
-@media (max-width: 970px){
-    div#register {
-    grid-template-columns: [first] 30%[second] 40% [third] auto;
+@media (max-width: 570px) {
+    div#userInfo {
+        grid-template-rows: [row1-start] 75px [row2-start] 15% [row3-start] 30px [row4-start] auto [row5-start] 30px
+        [row6-start] auto [row7-start] 30px [row8-start] 30px [row9-start] 30px;
     }
 }
 
-@media(max-width: 720px) {
-
-    .vstup{
-        max-width: 125px;
-    }
-    div#sing-up {
-        grid-template-columns: [first] 40%[second] auto [third] 5%;
-        grid-template-rows: [row1-start] 50px [row2-start] 35px [row3-start] 35px [row4-start] 30px [row5-start] 30px;
-    }
-    div#create-acc {
-        grid-template-columns: [first] 40%[second] auto [third] 5%;
-        grid-template-rows: [row1-start] 50px [row2-start] auto [row3-start] 35px [row4-start] 35px;
-    }
-    .all-check {
-        padding-left: 140px;
+@media (max-width: 460px) {
+    div#pridajPost {
+        grid-template-rows: [row1-start] 70px [row2-start] auto [row3-start] 350px [row4-start] 50px [row5-start] 30px;
     }
 }
-
-@media (max-width: 400px) {
-
-    .all-check {
-        grid-row:5/8;
-    }
-
-}
-
-@media (max-width: 320px) {
-    div#register {
-        grid-template-columns: [first] 35%[second] 40% [third] auto;
-    }
-}
-

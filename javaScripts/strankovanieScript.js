@@ -1,19 +1,47 @@
-function strankovanie(strankovanie, nazov) {
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("komentare").innerHTML = this.responseText;
-        }
-    };
-    xhttp.open("GET", "Ajaxy/komentareAjaxy/komentareStrankovanie.php?str="+strankovanie+"&post="+nazov, true);
-    xhttp.send();
+function strankovanie(stranka, nazov) {
+    komentare(stranka, nazov);
+    strankovanieCisla(stranka, nazov);
+}
 
-    let xhttp1 = new XMLHttpRequest();
-    xhttp1.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("cisla").innerHTML = this.responseText;
+function komentare(stranka, nazov) {
+    $.ajax({
+        type: "GET",
+        url: "Ajaxy/komentareAjaxy/komentareStrankovanie.php",
+        data: {
+            stranka,
+            nazov
+        },
+        success: function(data) {
+            $('#komentare').html(data);
         }
-    };
-    xhttp1.open("POST", "Ajaxy/komentareAjaxy/vypisCisel.php?post="+nazov+"&str="+strankovanie, true);
-    xhttp1.send();
+    });
+}
+
+function strankovanieCisla(stranka, nazov) {
+    $.ajax({
+        type: "GET",
+        url: "Ajaxy/komentareAjaxy/vypisCisel.php",
+        data: {
+            stranka,
+            nazov
+        },
+        success: function (data) {
+            $('#cisla').html(data);
+        }
+    });
+}
+
+function zmazanieKomentaru(cas, stranka, nazov) {
+    if(confirm("Naozaj chcete zmazať odpoveď?")) {
+        $.ajax({
+            type: "GET",
+            url: "Ajaxy/odstranOdpoved.php",
+            data: {
+                cas
+            },
+            success:function () {
+                strankovanie(stranka, nazov);
+            }
+        });
+    }
 }

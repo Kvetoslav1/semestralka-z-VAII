@@ -19,6 +19,8 @@
         <link href="styles/gridStyle.css" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="javaScripts/registerKontrola.js"></script>
     </head>
 
     <body>
@@ -42,28 +44,36 @@
                         Zároveň ju budete používať na príhlásenie do vašeho účtu.</span>
 
                     <span style="grid-area: 3/1; grid-row: 3" class="bold">Uživateľské meno:</span>
-                    <input name="UserName" style="grid-row: 3;" type="text" placeholder="Username" required class="vstup" minlength="3" maxlength="20">
+                    <input name="UserName" style="grid-row: 3;" type="text" placeholder="Username" required class="vstup" minlength="3" maxlength="20"
+                    onkeydown="kontrolaVstupov(this.form.UserName, 20, 'meno')"
+                    onkeyup="kontrolaVstupov(this.form.UserName, 20, 'meno')">
 
                     <span style="grid-area: 4/1;">Dĺžka mena musí byť najmenej 3 znaky a najviac 20 znakov. Heslo musí mať minimálne 8 znakov.</span>
 
                     <span style="grid-area: 5/1;" class="bold">E-mail:</span>
-                    <input name="Email" type="email" placeholder="email@.com" required class="vstup" style="grid-row: 5">
+                    <input name="Email" type="email" placeholder="email@gmail.com" required class="vstup" style="grid-row: 5"
+                    onkeydown="kontrolaVstupov(this.form.Email, 30, 'email')"
+                    onkeyup="kontrolaVstupov(this.form.Email, 30, 'email')">
 
                     <span style="grid-area: 6/1;" class="bold">Heslo:</span>
-                    <input name="Password" type="password" placeholder="Password" pattern=".{8,}" title="Heslo musí mať 8 alebo viac znakov"
-                           required class="vstup" style="grid-row: 6">
+                    <input id="hesloNaKontrolu" name="Password" type="password" placeholder="Password" pattern=".{8,70}" title="Heslo musí mať 8 alebo viac znakov"
+                           required class="vstup" style="grid-row: 6"
+                    onkeydown="kontrolaVstupov(this.form.Password, 70, 'heslo')"
+                    onkeyup="kontrolaVstupov(this.form.Password, 70, 'heslo')">
 
                     <span style="grid-area: 7/1;"  class="bold">Potvrdenie hesla:</span>
-                    <input name="ConfirmPassword" type="password" pattern=".{8,}" title="Heslo musí mať 8 alebo viac znakov"
-                           required class="vstup" style="grid-row: 7;">
+                    <input name="ConfirmPassword" type="password" pattern=".{8,70}" title="Heslo musí mať 8 alebo viac znakov"
+                           required class="vstup" style="grid-row: 7;"
+                    onkeyup="kontrolaVstupov(this.form.ConfirmPassword, 70, 'potvrHeslo')"
+                    onkeydown="kontrolaVstupov(this.form.ConfirmPassword, 70, 'potvrHeslo')">
+
+                    <p id="meno" class="all-check" style="visibility: hidden; grid-row: 3; grid-column: 3">Meno nesmie obsahovať špeciálne znaky!</p>
+                    <p id="email" class="all-check" style="visibility: hidden; grid-row: 5; grid-column: 3">Email musí obsahovať @ !</p>
+                    <p id="heslo" class="all-check" style="visibility: hidden; grid-row: 6; grid-column: 3">Heslo musí mať minimálne 8 znakov z písmen a čísel!</p>
+                    <p id="potvrHeslo" class="all-check" style="visibility: hidden; grid-row: 7;grid-column: 3;">Heslá nie sú zhodné.</p>
 
                     <?php
                     if(isset($_POST['UserName'],$registracia)){
-                        if(!$registracia->porovnanieHesiel()) {
-                            ?>
-                            <p class="all-check" style="grid-row: 7;grid-column: 2/4;">Heslá nie sú zhodné.</p>
-                            <?php
-                        }
                         if(isset($pripojenie)) {
                             if($registracia->zistiPouzivatelov($pripojenie, "meno", $registracia->getMeno()) != 0) { ?>
                                 <p class="all-check" style="grid-row: 5; grid-column: 2/4">Zadaný email sa už používa.</p>
@@ -78,17 +88,23 @@
                                     && $registracia->porovnanieHesiel() && filter_var($_POST['Email'], FILTER_VALIDATE_EMAIL)) {
                                     $registracia->setHeslo(password_hash($registracia->getHeslo(), PASSWORD_BCRYPT));
                                     $sprava = $registracia->pridajPouzivatela($pripojenie);
-                                    echo "<script type='text/javascript'>alert('$sprava');</script>";
+                                    if($sprava == "Účet bol vytvorený.") {
+                                        session_start();
+                                        $_SESSION['Email'] = $_POST['Email'];
+                                        header("Location: index.php");
+                                    } else {
+                                        echo "<script type='text/javascript'>alert('$sprava');</script>";
+                                    }
                                 }
                             }
                         }
                     }
                     ?>
 
-                    <span style="grid-area: 8/2"><input type="checkbox" required class="vstup">
-                    <a href="url">Suhlasím s podmienkami používania</a></span>
+                    <span style="grid-row: 8;grid-column: 2/4"><input type="checkbox" required class="vstup">
+                    <a href="https://www.prazdroj.sk/podmienky-pouzivania">Suhlasím s podmienkami používania</a></span>
 
-                    <input type="submit" class="btn-reg-log" style="grid-area: 9/2">
+                    <input id="submitRegistracie" type="submit" class="btn-reg-log" style="grid-area: 9/2;">
 
                 </div>
 

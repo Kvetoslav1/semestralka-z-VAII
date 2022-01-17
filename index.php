@@ -83,8 +83,8 @@ if(isset($_POST['nazovPostu'], $pripojenie)) {
                                             <?php echo $pracovanieDatabaza->getNadpisClanku() ?>
                                         </div>
                                     </td>
-                                    <td>0</td>
-                                    <td>0</td>
+                                    <td><?php echo $pracovanieDatabaza->dajPocetPostovClanku($pripojenie); ?></td>
+                                    <td><?php echo $pracovanieDatabaza->dajPocetOdpovediClanku($pripojenie); ?></td>
                                 </tr>
                             <?php } ?>
                     </table>

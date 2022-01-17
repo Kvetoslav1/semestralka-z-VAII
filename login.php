@@ -55,9 +55,9 @@ $prihlasovanie = new prihlasovanie();
                     <span class="bold">Heslo:</span>
                     <input name="password" type="password" placeholder="Password" required class="vstup" style="grid-row: 3;">
 
-                    <span style="grid-area: 4 / 2;align-self: center"><a href="url" class="bold">
-                    Zabudnuté heslo</a></span>
-                    <button class="btn-reg-log" style="grid-area: 5/2;">Prihlásiť sa</button>
+<!--                    <span style="grid-area: 4 / 2;align-self: center"><a href="url" class="bold">-->
+<!--                    Zabudnuté heslo</a></span>-->
+                    <button class="btn-reg-log" style="grid-area: 4/2;">Prihlásiť sa</button>
 
                 </div>
             </form>
@@ -68,7 +68,7 @@ $prihlasovanie = new prihlasovanie();
                     Ak sa chcete prihlásiť musíte mať najprv vytvorený účet. Registrácia trvá len pár sekúnd a dáva vám
                         väčšie možnosti. Pred registráciou sa uistite, že ste sa oboznámili s podmienkami pre používanie
                         tohoto fóra a s ďalšími pravidlami na hlavnej stránke, ktoré sa môžu časom upraviť poprípade pridať.</span>
-                <span style="grid-column: 1/3"> <a href="url">Podmienky používania</a> | <a href="url">Ochrana súkromia</a></span>
+                <span style="grid-column: 1/3"> <a href="https://www.prazdroj.sk/podmienky-pouzivania">Podmienky používania</a> | <a href="https://www.websupport.sk/sukromie/">Ochrana osobných údajov</a></span>
                 <button class="btn-reg-log" onclick="document.location='register.php'" style="grid-area: 4/2;">
                     Registrovať sa</button>
             </div>

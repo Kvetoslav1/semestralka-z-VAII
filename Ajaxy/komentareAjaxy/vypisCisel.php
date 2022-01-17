@@ -1,15 +1,16 @@
 <?php
 require "../../pripojenie.php";
 require "../../pracovanie_s_databazou/vyberanieVkladanieDatabaza.php";
-?>
-    <script src="../../javaScripts/strankovanieScript.js"></script>
-<?php
-$nazov = $_REQUEST['post'];
-$stranka = $_REQUEST['str'];
+
+$stranka = $_REQUEST['stranka'];
+$nazov = $_REQUEST['nazov'];
 
 $dajPocetOdpovedi = new vyberanieVkladanieDatabaza();
 if(isset($pripojenie)) {
     $pocet = $dajPocetOdpovedi->dajPocetKomentarovPostu($pripojenie, $nazov);
+    if($stranka * 4 == $pocet + 4) {
+        $stranka -= 1;
+    }
     $modulo = $pocet % 4;
     $pocet /= 4;
     if($modulo != 0) {

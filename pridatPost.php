@@ -51,8 +51,7 @@ if(isset($_GET['cl'])) {
 
         <?php require "zakladnaStranka/header.php"; ?>
 
-        <div class="gridy" style="grid-template-columns: [first] 50% [second] 50%; grid-template-rows: [row1-start] 15px; border-radius: 10px;
-            ;grid-gap: 0; margin-top: 0">
+        <div class="vracenie-vytvaranie">
             <div>
                 <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="clanky.php?cl=<?php echo $nazovCLanku ?>">Vrátenie na článok <?php echo $nazovCLanku ?></a>
             </div>
@@ -70,9 +69,8 @@ if(isset($_GET['cl'])) {
 
                 <span style="padding-top: 5px; grid-column: 1" class="bold">Obsah článku:</span>
                 <label style="grid-row: 3; grid-column: 2/4">
-                    <textarea style="width: 90%; height: 100%;"
-                              name="textArea" onKeyDown="limitText(this.form.textArea,this.form.countdown,1000);"
-                              onKeyUp="limitText(this.form.textArea,this.form.countdown,1000);">
+                    <textarea name="textArea" onKeyDown="limitText(this.form.textArea,this.form.countdown,1000);"
+                    onKeyUp="limitText(this.form.textArea,this.form.countdown,1000);" style="width: 90%; height: 100%; resize: none">
                     </textarea>
                 </label>
                 <div style="grid-row: 4; grid-column: 1/4">

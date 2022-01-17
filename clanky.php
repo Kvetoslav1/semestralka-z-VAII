@@ -30,7 +30,7 @@ if(isset($_GET['cl'])) {
 
         <div class="vracenie-vytvaranie">
             <div>
-                <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="index.php" ">Vrátenie na hlavnú stránku</a>
+                <a class="fa fa-level-down" aria-hidden="true" style="margin-left: 5px;" href="index.php">Vrátenie na hlavnú stránku</a>
             </div>
         <?php
         if(isset($_SESSION['Email'])) {
@@ -61,7 +61,7 @@ if(isset($_GET['cl'])) {
                         ?>
                         <tr>
                             <td id="<?php echo $vyberanie->getNadpisPostu() ?>">
-                                <div style="display: grid;grid-template-columns: [first] 70% [second] 30%;grid-template-rows: [row1-start] auto [row2-start] auto;">
+                                <div style="display: grid;grid-template-columns: [first] auto[second] auto;grid-template-rows: [row1-start] auto [row2-start] auto;">
                                     <div>
                                         <a href="posty.php?post=<?php echo $vyberanie->getNadpisPostu() ?>&cl=<?php echo $nazovClanku ?>">
                                             <?php echo $vyberanie->getNadpisPostu() ?></a>
@@ -86,7 +86,7 @@ if(isset($_GET['cl'])) {
                                     </div>
                                 </div>
                             </td>
-                            <td id="<?php echo $i ?>">0</td>
+                            <td id="<?php echo $i ?>"><?php echo $vyberanie->dajPocetOdpovediPostu($pripojenie); ?></td>
                         </tr>
                         <?php
                     }
